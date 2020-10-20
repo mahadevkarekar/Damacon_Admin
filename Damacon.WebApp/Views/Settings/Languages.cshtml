@@ -1,0 +1,100 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model List<LanguageResourceModel>
+
+@{
+    ViewBag.Title = Resources.HM_Languages;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Common/_KendoStyles.cshtml")
+
+<div class="row form-group">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold" for="formGroupExampleInput">@Html.Raw(Resources.GenericSearch)</label>
+            <input type="text" class="form-control-sm" id="searchbox" placeholder="@Html.Raw(Resources.SearchMinimumCharacters)">
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            @*<label class="col-form-label" for="formGroupExampleInput">Example label</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">*@
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            @*<label class="col-form-label" for="formGroupExampleInput">Example label</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">*@
+        </div>
+    </div>
+    <div class="col-lg-3">
+        @*<div class="">
+                <label for="checkboxExample2">Show Deleted</label>
+                <input type="checkbox" checked="" id="ShowDeleted">
+            </div>*@
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        @*<input type="submit" class="k-button k-primary create" value="@Resources.NewLanguageResource" />*@
+        @using (Html.BeginForm("RefreshLanguageCache", "Settings", FormMethod.Post))
+        {
+            <input type="submit" class="k-button k-primary" value="Refresh Cache" />
+        }
+
+       
+    </div>
+    <div class="col-md-6">
+        <form action="https://clienti.damacontest.it/it-IT/Home/RefreshLanguageCache" method="get" target="_blank">
+            <input type="submit" class="k-button k-primary" value="Refresh Client Cache" />
+        </form>
+    </div>
+    <div class="col-md-3 text-right">
+        @Html.Partial("~/Views/Common/_PrintControls.cshtml", new ViewDataDictionary { { "controller", "Settings" }, { "action", "ExportLanguageResourcesGrid" } })
+    </div>
+</div>
+
+@(Html.Kendo().Grid<LanguageResourceModel>()
+        .Name("manageLanguageResourceGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.ID).Width(120);
+            columns.Bound(p => p.EnglishValue).Width(450);
+            columns.Bound(p => p.ItalianoValue).Width(450);
+            columns.Bound(p => p.Notes).Width(120);
+            columns.Command(command =>
+            {
+                command.Edit().Text(" ");
+                //command.Destroy().Text(" ").IconClass("k-icon k-i-delete");
+            }).Width(90);
+        })
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("AddEditLanguageResource").Window(w => w.Title(Resources.Edit)))
+        .Pageable()
+        .Sortable()
+        .Scrollable()
+        .HtmlAttributes(new { style = "height:440px;" })
+        .Events(e => { e.DataBound("dataBound"); e.Edit("OnEdit"); })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(sort => sort.Add("ID").Ascending())
+        .PageSize(20)
+        .Batch(false)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.ID);
+            model.Field(p => p.ID).Editable(false);
+        })
+        .Create(update => update.Action("ManageLanguageResourcesEditingPopup_Create", "Settings"))
+        .Read(read => read.Action("ManageLanguageResourcesEditingPopup_Read", "Settings"))
+        .Update(update => update.Action("ManageLanguageResourcesEditingPopup_Update", "Settings").Type(HttpVerbs.Post))
+        .Destroy(update => update.Action("ManageLanguageResourcesEditingPopup_Destroy", "Settings"))
+    )
+)
+
+
+@Html.Partial("~/Views/Common/_KendoScripts.cshtml", new ViewDataDictionary { { "gridName", "#manageLanguageResourceGrid" } })

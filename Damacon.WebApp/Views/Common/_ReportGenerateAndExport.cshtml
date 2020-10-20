@@ -1,0 +1,27 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model ReportModelBase
+
+<div class="row form-group">
+    <div class="col-md-2" style="margin-top:20px;">
+        <button type="submit" class="k-button k-primary export" data-format="@UIExtensions.ExportFormat_Inline" data-title="Title1" value="">@Resources.Report_GenerateReport</button>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.ReportOrientation</label>
+            @Html.DropDownListFor(model => model.ReportLayout,
+                new SelectList((System.Collections.IEnumerable)ViewData["ReportLayoutValues"], "Value", "Text"),
+                new { @class = "form-control form-control-sm mb-3 reportFilters" })
+        </div>
+    </div>
+    <div class="col-md-5">
+    </div>
+    <div class="col-md-3 text-right" style="margin-top:20px;">
+        <button type="submit" class="k-button export" data-format="@UIExtensions.ExportFormat_Excel" data-title="Title1" value="">
+            <span class="k-icon k-i-file-excel k-icon-24"></span>
+        </button>
+        <button type="submit" class="k-button export" data-format="@UIExtensions.ExportFormat_PDF" data-title="Title2" value="">
+            <span class="k-icon k-i-print k-icon-24"></span>
+        </button>
+    </div>
+</div>

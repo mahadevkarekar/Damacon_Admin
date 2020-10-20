@@ -1,0 +1,12 @@
+﻿@using Damacon.DAL.i18n;
+
+@if (UIExtensions.HasUserEditAccess(5))
+{
+<label>@Resources.ShowDeleted</label>
+<div>
+    <label class="checkBoxContainer" style="margin-bottom:-8px;">
+        <input type="checkbox" checked="" id="ShowDeleted">
+        <span class="checkmark"></span>
+    </label>
+</div>
+}

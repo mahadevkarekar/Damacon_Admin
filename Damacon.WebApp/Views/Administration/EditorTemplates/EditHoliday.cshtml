@@ -1,0 +1,116 @@
+﻿
+@using Damacon.DAL.i18n;
+@model Damacon.WebApp.Models.HolidayModel
+
+@Html.Partial("~/Views/Common/_KendoPopupStyles.cshtml")
+
+<style type="text/css">
+  .k-numeric-wrap:before {
+    padding-bottom: 2px !important;
+  }
+
+  .k-numeric-wrap {
+    border-radius: 1px !important;
+  }
+
+  .k-numerictextbox {
+    padding: 0px !important;
+  }
+
+  .highLight {
+    font-weight: bolder;
+  }
+
+  .isNumber {
+    text-align: right;
+  }
+</style>
+
+<div id="EmployeeExtraPayDialog" class="container main-section-content">
+  @using (Html.BeginForm("MonthHoliday", "Administration", FormMethod.Post))
+  {
+    @Html.Hidden("DayAddNew", 0)
+    @Html.HiddenFor(model => model.Year)
+    @Html.HiddenFor(model => model.Month)
+
+    <div class="row">
+      <div class="col-md-3" style="padding: 0px">
+        <label class="col-form-label">@Resources.SelectHoliday</label>
+        @Html.TextBoxFor(model => model.MonthDescription, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "10", disabled = "disabled" })
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row" style="border-top: 1px solid #ddd; min-height: 15px">
+    </div>
+
+    <div id="dvTableResults" class="row">
+    </div>
+
+    <div class="row form-group" style="padding-top: 10px">
+      <div class="col-md-12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="form-group">
+          @Html.LabelFor(model => model.Notes, new { @class = "col-form-label" })
+          @Html.TextAreaFor(model => model.Notes, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "280" })
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row" style="border-top: 1px solid #ddd; min-height: 15px">
+    </div>
+
+    <div class="row">
+      <div class="col-md-9">
+      </div>
+      <div class="col-md-3" style="text-align: right">
+        <button id="btnCalculateExtraPay" onclick="SetDayChecked()" type="submit" class="k-button k-button-icontext k-primary k-grid-update" name="AddMonthHolidays">
+          <span class="k-icon k-i-check"></span>
+          @Resources.Update
+        </button>
+        <button type="button" class="k-button k-button-icontext k-grid-cancel close-button" style="background-color: rgb(217, 81, 77);">
+          <span class="k-icon k-i-cancel"></span>
+          @Resources.Cancel
+        </button>
+      </div>
+    </div>
+
+    <div id="dvCheckItems" style="visibility: hidden">
+    </div>
+  }
+</div>
+
+
+<script type="text/javascript">
+
+  function SetDayChecked()
+  {
+    var valArray = "";
+    $("input[type=checkbox]:checked").each(function ()
+    {
+      valArray += $(this).val() + ";";
+    }
+    );
+
+    $("#DayAddNew").val(valArray);
+  }
+
+    $(document).ready(function ()
+    {
+
+      $(".close-button").click(function ()
+      {
+        $(this).closest("[data-role=window]").data("kendoWindow").close();
+      });
+
+      var yearId = $("#Year").val();
+      var monthId = $("#Month").val();
+
+      $("#dvTableResults").load('@(Url.Action("GetTableMonthHoliday", "Administration",null, Request.Url.Scheme))?yearId=' + yearId + '&monthId=' + monthId);
+
+    });
+
+</script>
+

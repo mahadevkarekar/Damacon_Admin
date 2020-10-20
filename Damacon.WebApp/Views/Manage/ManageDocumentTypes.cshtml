@@ -1,0 +1,95 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model List<DocumentTypeModel>
+
+@{
+    ViewBag.Title = Resources.HM_Documents;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Common/_KendoStyles.cshtml")
+
+<div class="row form-group">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold" for="formGroupExampleInput">@Html.Raw(Resources.GenericSearch)</label>
+            <input type="text" class="form-control-sm" id="searchbox" placeholder="@Html.Raw(Resources.SearchMinimumCharacters)">
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+             <label class="col-form-label">@Resources.State</label>
+            @Html.DropDownList("DisableFilter",
+           new SelectList((System.Collections.IEnumerable)ViewData["EnabledDisabledValues"], "Value", "Text", false),
+           "",
+           new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "Disable" })
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="">
+            @Html.Partial("~/Views/Common/_ShowDeletedControl.cshtml")
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <input type="submit" class="k-button k-primary create" value="@Resources.NewDocumentType" />
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-3 text-right">
+        @Html.Partial("~/Views/Common/_PrintControls.cshtml", new ViewDataDictionary { { "controller", "Manage" }, { "action", "ExportDocumentTypesGrid" } })
+    </div>
+</div>
+
+@(Html.Kendo().Grid<DocumentTypeModel>()
+        .Name("manageDocumentTypeGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.TypeText).Width(450);
+            columns.ForeignKey(p => p.Disable, (System.Collections.IEnumerable)ViewData["EnabledDisabledValues"], "Value", "Text").Title(Resources.State).Width(120);
+            columns.Bound(p => p.Notes).Width(450);
+            columns.Command(command =>
+            {
+                command.Edit().Text(" ");
+                command.Destroy().Text(" ").IconClass("k-icon k-i-delete");
+            }).Width(90);
+        })
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("AddEditDocumentType").Window(w => w.Title(Resources.Edit)))
+        .Pageable()
+        .Sortable(sortable => sortable.AllowUnsort(false))
+        .Scrollable()
+        .HtmlAttributes(new { style = "height:440px;" })
+        .Events(e => { e.DataBound("dataBound"); e.Edit("OnEdit"); })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Filter(f => f.Add(a => a.Disable).IsEqualTo(false))
+        .Sort(sort => sort.Add("TypeText").Ascending())
+        .PageSize(20)
+        .Batch(false)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.ID);
+            model.Field(p => p.ID).DefaultValue(0);
+        })
+        .Create(update => update.Action("ManageDocumentTypesEditingPopup_Create", "Manage"))
+        .Read(read => read.Action("ManageDocumentTypesEditingPopup_Read", "Manage").Data("readDeletedCheckboxData"))
+        .Update(update => update.Action("ManageDocumentTypesEditingPopup_Update", "Manage").Type(HttpVerbs.Post))
+        .Destroy(update => update.Action("ManageDocumentTypesEditingPopup_Destroy", "Manage"))
+    )
+)
+
+
+@Html.Partial("~/Views/Common/_KendoScripts.cshtml", new ViewDataDictionary { { "gridName", "#manageDocumentTypeGrid" } })

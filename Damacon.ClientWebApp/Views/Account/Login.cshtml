@@ -1,0 +1,140 @@
+﻿@using Damacon.ClientWebApp.Models
+@using Damacon.DAL.i18n;
+@model LoginViewModel
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+}
+
+@{
+    ViewBag.Title = Resources.LOGIN;
+}
+@{
+    Layout = "~/Views/Shared/_LayoutPreLogin.cshtml";
+}
+
+
+<section class="body-sign">
+    <div class="center-sign">
+        <h2 class="pagetitle">@Html.Raw(Resources.FidelityCard)</h2>
+        <div class="language float-right" style="margin-top:-10px">
+            @Html.ActionLink("IT", "Login", "Account", new { culture = "it-IT" }, null)
+            <span>-</span>
+            @Html.ActionLink("EN", "Login", "Account", new { culture = "en-US" }, null)
+        </div>
+        <div class="panel card-sign">
+
+            <div class="card-body" style="margin-top:20px;">
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Username)
+                        <div class="input-group input-group-icon">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = Resources.UseYourFidelityCardNumebr })
+                            <span class="input-group-addon">
+                                <span class="icon icon-lg">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "field-validation-valid" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="clearfix">
+                            @Html.LabelFor(m => m.Password)
+                        </div>
+                        <div class="input-group input-group-icon">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            <span class="input-group-addon">
+                                <span class="icon icon-lg">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "field-validation-valid" })
+                    </div>
+                    <div>
+                        <label class="checkBoxContainer">
+                            @Html.CheckBoxFor(m => m.IsPrivacyPolicyAccepted)
+                            <span class="checkmark"></span>
+                        </label>
+                        <label style="font-size:14px; margin-left:25px">
+                            @Html.Raw(Resources.ReadAndAcceptedPrivacy)
+                            <a href="@Url.Action("PrivacyPolicy", "About")">@Html.Raw(Resources.Privacy)</a> <a href="@Url.Action("Regulations", "About")">@Html.Raw(Resources.Regulation)</a>
+                        </label>
+                    </div>
+                    <div class="row mb-3" style="margin-top:10px">
+                        <div class="col-sm-12 text-center">
+                            <button type="submit" class="btn btn-lg btn-primary">&nbsp;&nbsp;-&nbsp;&nbsp; @Html.Raw(Resources.SignIn) &nbsp;&nbsp;- &nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+
+                }
+                @Html.ValidationSummary(true, null, new { @class = "alert alert-danger", style = "padding: 1rem 0rem 0rem 0rem;" })
+               
+                <div class="row mb-3">
+                    <div class="col-sm-12 text-center">
+                        <a href="#" id="RecordPassword">@Html.Raw(Resources.ForgetPassword)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel card-sign">
+
+            <div class="card-body" style="margin-top:10px;text-align:center">
+                @Html.Raw(Resources.ClientWebsiteLoginPageLine1) <br />
+                @Html.Raw(Resources.ClientWebsiteLoginPageLine2) <br />
+                @Html.Raw(Resources.ClientWebsiteLoginPageLine3) <br />
+                @Html.Raw(Resources.ClientWebsiteLoginPageLine4) <br /><br />
+
+                <a href="@Url.Action("StoreList", "About")">
+                    <span><i class='fa fa-map-marker'></i></span>
+                    @Html.Raw(Resources.ClientWebsiteLoginPageLine5)
+                </a>
+                <br /><br />
+
+                @Html.Raw(Resources.ClientWebsiteLoginPageLine6)
+            </div>
+        </div>
+
+        <p class="text-justify text-muted mt-3 mb-3">
+
+        <p class="text-center text-muted">@Html.Raw(Resources.ClientWebsiteLoginPageLineBottom)</p>
+    </div>
+</section>
+
+
+<div id="RecoverPasswordDialog"></div>
+
+@section additionaljs
+{
+    <script type="text/javascript">
+
+        $('#RecordPassword').click(function () {
+            var windowRecoverPasswordDialog = $("#RecoverPasswordDialog");
+            windowRecoverPasswordDialog.kendoWindow({
+                modal: true,
+                width: "350px",
+                title: "@Html.Raw(Resources.PasswordRecovery)",
+                content: {
+                    url: "it-IT/Account/GetRecoverPasswordView"
+                },
+                error: function (e) {
+                    alert(e.xhr.statusText);
+                    kendo.ui.progress(windowRecoverPasswordDialog.data("kendoWindow").element, false);
+                }
+            });
+
+            windowRecoverPasswordDialog.data("kendoWindow").center();
+            windowRecoverPasswordDialog.closest(".k-window").css({ top: 100 });
+            windowRecoverPasswordDialog.data("kendoWindow").open();
+            kendo.ui.progress(windowRecoverPasswordDialog.data("kendoWindow").element, true);
+        });
+
+    </script>
+}
+
+

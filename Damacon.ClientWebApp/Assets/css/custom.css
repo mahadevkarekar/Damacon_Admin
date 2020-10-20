@@ -1,0 +1,35 @@
+/* Add here all your CSS customizations */
+.deleted-row{
+    opacity:0.5;
+}
+
+    .k-grid {
+    overflow-x: auto;
+}
+
+.k-grid .k-grid-toolbar .k-grid-add,
+  .k-grid tbody .k-grid-edit,
+  .k-grid tbody .k-grid-update,
+  .k-grid tbody .k-grid-cancel,
+  .k-grid tbody .k-grid-delete {
+    min-width: 0;
+  }
+
+  .k-grid .k-grid-toolbar .k-grid-add .k-icon,
+  .k-grid tbody .k-grid-edit .k-icon,
+  .k-grid tbody .k-grid-update .k-icon,
+  .k-grid tbody .k-grid-cancel .k-icon,
+  .k-grid tbody .k-grid-delete .k-icon {
+    margin: 0;
+  }
+
+ .pagetitle{
+     text-align:center;
+     font-family:'MinionPro-Semibold';
+     color:#203965;
+     font-style:italic
+ }
+
+ @font-face {font-family:'MinionPro-Semibold';src:url('https://clienti.damacontest.it/fonts/MinionPro/MinionPro-Semibold.eot');src:url('https://clienti.damacontest.it/fonts/MinionPro/MinionPro-Semibold.ttf') format("truetype"),
+url('https://clienti.damacontest.it/fonts/MinionPro/MinionPro-Semibold.svg') format("svg")
+}

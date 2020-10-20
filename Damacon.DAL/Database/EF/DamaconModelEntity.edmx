@@ -1,0 +1,1277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DamaconModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ApplicationLink">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="LanguageResourceID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LinkController" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LinkAction" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'StoreD.dbo.ApplicationLinkUserTypePermission' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ApplicationLinkUserTypePermission">
+          <Key>
+            <PropertyRef Name="ApplicationLinkId" />
+            <PropertyRef Name="UserTypeId" />
+            <PropertyRef Name="Disable" />
+          </Key>
+          <Property Name="ApplicationLinkId" Type="int" Nullable="false" />
+          <Property Name="UserTypeId" Type="bigint" Nullable="false" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateBirth" Type="date" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prov" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryID" Type="bigint" />
+          <Property Name="CountryMobileCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="HomePhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobilePhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="RegisteredByUserID" Type="bigint" Nullable="false" />
+          <Property Name="RegisteredOnDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="ClientPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="101" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="CardCodeOld" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="10" />
+          <Property Name="CardCode" Type="int" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryEN" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CountryIT" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CountryPhoneCode" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DBBackupDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="BackupTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DefaultLoginPages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DefaultLoginPage_LanguageID" Type="int" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documentation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DocumentationTypeID" Type="bigint" Nullable="false" />
+          <Property Name="StoreSelectionType" Type="int" Nullable="false" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="500" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentationType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeText" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailServiceItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SendCondition" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SendTime" Type="datetime" />
+          <Property Name="SMTPServer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SMTPUser" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SMTPPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SMTPPort" Type="int" Nullable="false" />
+          <Property Name="IsSSL" Type="bit" Nullable="false" />
+          <Property Name="SenderEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="RecipientEmail" Type="nvarchar" MaxLength="500" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
+          <Property Name="LastSentResult" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastSentTime" Type="datetime" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DataDate" Type="int" />
+        </EntityType>
+        <EntityType Name="EmailTaskResultItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SendCondition" Type="int" Nullable="false" />
+          <Property Name="SentResult" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SentDateTime" Type="datetime" Nullable="false" />
+          <Property Name="SenderEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RecipientEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Holidays">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HolidayDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="LanguageMeta">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Culture" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanguageResource">
+          <Key>
+            <PropertyRef Name="ResourceKey" />
+          </Key>
+          <Property Name="ResourceKey" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EnglishValue" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="ItalianoValue" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="MaxLenght" Type="int" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="LeaveType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeaveTypeTextEN" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LeaveTypeTextIT" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="UserTypeID" Type="bigint" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Prov" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryID" Type="bigint" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="HomePhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobilePhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastAccessTime" Type="datetime" />
+          <Property Name="LastAccessIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="DefaultLoginPage" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="300" />
+          <Property Name="PitcurePath" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Disable" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="MonHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TueHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="WedHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ThuHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="FriHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SatHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SunHours" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="WeeklyHours" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTypeEn" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserTypeIT" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WebConfiguration">
+          <Key>
+            <PropertyRef Name="ConfigKey" />
+          </Key>
+          <Property Name="ConfigKey" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConfigValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastModifyUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LastModifyIP" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ApplicationLink_LanguageResource">
+          <End Role="LanguageResource" Type="Self.LanguageResource" Multiplicity="1" />
+          <End Role="ApplicationLink" Type="Self.ApplicationLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LanguageResource">
+              <PropertyRef Name="ResourceKey" />
+            </Principal>
+            <Dependent Role="ApplicationLink">
+              <PropertyRef Name="LanguageResourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationLinkUserTypePermission_ApplicationLink">
+          <End Role="ApplicationLink" Type="Self.ApplicationLink" Multiplicity="1" />
+          <End Role="ApplicationLinkUserTypePermission" Type="Self.ApplicationLinkUserTypePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationLink">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationLinkUserTypePermission">
+              <PropertyRef Name="ApplicationLinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationLinkUserTypePermission_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="ApplicationLinkUserTypePermission" Type="Self.ApplicationLinkUserTypePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationLinkUserTypePermission">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_User_LastModifyUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_User_RegisteredByUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="RegisteredByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBBackupDetail_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DBBackupDetail" Type="Self.DBBackupDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBBackupDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documentation_DocumentationType">
+          <End Role="DocumentationType" Type="Self.DocumentationType" Multiplicity="1" />
+          <End Role="Documentation" Type="Self.Documentation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentationType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Documentation">
+              <PropertyRef Name="DocumentationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documentation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Documentation" Type="Self.Documentation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Documentation">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentationType_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DocumentationType" Type="Self.DocumentationType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentationType">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailServiceItem_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="EmailServiceItem" Type="Self.EmailServiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmailServiceItem">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ApplicationLink">
+          <End Role="ApplicationLink" Type="Self.ApplicationLink" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationLink">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="DefaultLoginPage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DamaconModelStoreContainer">
+          <EntitySet Name="ApplicationLink" EntityType="Self.ApplicationLink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DBBackupDetail" EntityType="Self.DBBackupDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DefaultLoginPages" EntityType="Self.DefaultLoginPages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documentation" EntityType="Self.Documentation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentationType" EntityType="Self.DocumentationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailServiceItem" EntityType="Self.EmailServiceItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTaskResultItem" EntityType="Self.EmailTaskResultItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Holidays" EntityType="Self.Holidays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LanguageMeta" EntityType="Self.LanguageMeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LanguageResource" EntityType="Self.LanguageResource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LeaveType" EntityType="Self.LeaveType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebConfiguration" EntityType="Self.WebConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationLinkUserTypePermission" EntityType="Self.ApplicationLinkUserTypePermission" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ApplicationLinkUserTypePermission].[ApplicationLinkId] AS [ApplicationLinkId], 
+    [ApplicationLinkUserTypePermission].[UserTypeId] AS [UserTypeId], 
+    [ApplicationLinkUserTypePermission].[Disable] AS [Disable]
+    FROM [dbo].[ApplicationLinkUserTypePermission] AS [ApplicationLinkUserTypePermission]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ApplicationLink_LanguageResource" Association="Self.FK_ApplicationLink_LanguageResource">
+            <End Role="LanguageResource" EntitySet="LanguageResource" />
+            <End Role="ApplicationLink" EntitySet="ApplicationLink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationLinkUserTypePermission_ApplicationLink" Association="Self.FK_ApplicationLinkUserTypePermission_ApplicationLink">
+            <End Role="ApplicationLink" EntitySet="ApplicationLink" />
+            <End Role="ApplicationLinkUserTypePermission" EntitySet="ApplicationLinkUserTypePermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationLinkUserTypePermission_UserType" Association="Self.FK_ApplicationLinkUserTypePermission_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="ApplicationLinkUserTypePermission" EntitySet="ApplicationLinkUserTypePermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_User_LastModifyUser" Association="Self.FK_Client_User_LastModifyUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_User_RegisteredByUser" Association="Self.FK_Client_User_RegisteredByUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBBackupDetail_User" Association="Self.FK_DBBackupDetail_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DBBackupDetail" EntitySet="DBBackupDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documentation_DocumentationType" Association="Self.FK_Documentation_DocumentationType">
+            <End Role="DocumentationType" EntitySet="DocumentationType" />
+            <End Role="Documentation" EntitySet="Documentation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documentation_User" Association="Self.FK_Documentation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Documentation" EntitySet="Documentation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentationType_User" Association="Self.FK_DocumentationType_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DocumentationType" EntitySet="DocumentationType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailServiceItem_User" Association="Self.FK_EmailServiceItem_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="EmailServiceItem" EntitySet="EmailServiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ApplicationLink" Association="Self.FK_User_ApplicationLink">
+            <End Role="ApplicationLink" EntitySet="ApplicationLink" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Country" Association="Self.FK_User_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Self.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DamaconModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ApplicationLink">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="LanguageResourceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LinkController" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LinkAction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="LanguageResource" Relationship="Self.FK_ApplicationLink_LanguageResource" FromRole="ApplicationLink" ToRole="LanguageResource" />
+          <NavigationProperty Name="ApplicationLinkUserTypePermissions" Relationship="Self.FK_ApplicationLinkUserTypePermission_ApplicationLink" FromRole="ApplicationLink" ToRole="ApplicationLinkUserTypePermission" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_ApplicationLink" FromRole="ApplicationLink" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateBirth" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prov" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryID" Type="Int64" />
+          <Property Name="CountryMobileCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobilePhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RegisteredByUserID" Type="Int64" Nullable="false" />
+          <Property Name="RegisteredOnDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ClientPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CardCodeOld" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CardCode" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Client_User_LastModifyUser" FromRole="Client" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Client_User_RegisteredByUser" FromRole="Client" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryEN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountryIT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountryPhoneCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Country" FromRole="Country" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DBBackupDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="BackupTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_DBBackupDetail_User" FromRole="DBBackupDetail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DefaultLoginPage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DefaultLoginPage_LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documentation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DocumentationTypeID" Type="Int64" Nullable="false" />
+          <Property Name="StoreSelectionType" Type="Int32" Nullable="false" />
+          <Property Name="Tag" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FilePath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DocumentationType" Relationship="Self.FK_Documentation_DocumentationType" FromRole="Documentation" ToRole="DocumentationType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Documentation_User" FromRole="Documentation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="DocumentationType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeText" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Documentations" Relationship="Self.FK_Documentation_DocumentationType" FromRole="DocumentationType" ToRole="Documentation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_DocumentationType_User" FromRole="DocumentationType" ToRole="User" />
+        </EntityType>
+        <EntityType Name="EmailServiceItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SendCondition" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SendTime" Type="DateTime" Precision="3" />
+          <Property Name="SMTPServer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMTPUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMTPPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SMTPPort" Type="Int32" Nullable="false" />
+          <Property Name="IsSSL" Type="Boolean" Nullable="false" />
+          <Property Name="SenderEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecipientEmail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="LastSentResult" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastSentTime" Type="DateTime" Precision="3" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DataDate" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_EmailServiceItem_User" FromRole="EmailServiceItem" ToRole="User" />
+        </EntityType>
+        <EntityType Name="EmailTaskResultItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SendCondition" Type="Int32" Nullable="false" />
+          <Property Name="SentResult" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SentDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SenderEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RecipientEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HolidayDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LanguageMeta">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Culture" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LanguageResource">
+          <Key>
+            <PropertyRef Name="ResourceKey" />
+          </Key>
+          <Property Name="ResourceKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EnglishValue" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItalianoValue" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxLenght" Type="Int32" />
+          <Property Name="Notes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationLinks" Relationship="Self.FK_ApplicationLink_LanguageResource" FromRole="LanguageResource" ToRole="ApplicationLink" />
+        </EntityType>
+        <EntityType Name="LeaveType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeaveTypeTextEN" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LeaveTypeTextIT" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserTypeID" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prov" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryID" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HomePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobilePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastAccessTime" Type="DateTime" Precision="3" />
+          <Property Name="LastAccessIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultLoginPage" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="PitcurePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="MonHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TueHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="WedHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ThuHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FriHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SatHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SunHours" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="WeeklyHours" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="ApplicationLink" Relationship="Self.FK_User_ApplicationLink" FromRole="User" ToRole="ApplicationLink" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Client_User_LastModifyUser" FromRole="User" ToRole="Client" />
+          <NavigationProperty Name="Clients1" Relationship="Self.FK_Client_User_RegisteredByUser" FromRole="User" ToRole="Client" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_User_Country" FromRole="User" ToRole="Country" />
+          <NavigationProperty Name="DBBackupDetails" Relationship="Self.FK_DBBackupDetail_User" FromRole="User" ToRole="DBBackupDetail" />
+          <NavigationProperty Name="Documentations" Relationship="Self.FK_Documentation_User" FromRole="User" ToRole="Documentation" />
+          <NavigationProperty Name="DocumentationTypes" Relationship="Self.FK_DocumentationType_User" FromRole="User" ToRole="DocumentationType" />
+          <NavigationProperty Name="EmailServiceItems" Relationship="Self.FK_EmailServiceItem_User" FromRole="User" ToRole="EmailServiceItem" />
+          <NavigationProperty Name="UserType" Relationship="Self.FK_User_UserType" FromRole="User" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserTypeIT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_UserType" FromRole="UserType" ToRole="User" />
+          <NavigationProperty Name="ApplicationLinkUserTypePermissions" Relationship="Self.FK_ApplicationLinkUserTypePermission_UserType" FromRole="UserType" ToRole="ApplicationLinkUserTypePermission" />
+        </EntityType>
+        <EntityType Name="WebConfiguration">
+          <Key>
+            <PropertyRef Name="ConfigKey" />
+          </Key>
+          <Property Name="ConfigKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConfigValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastModifyUserID" Type="Int64" Nullable="false" />
+          <Property Name="LastModifyDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ApplicationLinkUserTypePermission">
+          <Key>
+            <PropertyRef Name="ApplicationLinkId" />
+            <PropertyRef Name="UserTypeId" />
+            <PropertyRef Name="Disable" />
+          </Key>
+          <Property Name="ApplicationLinkId" Type="Int32" Nullable="false" />
+          <Property Name="UserTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Disable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ApplicationLink" Relationship="Self.FK_ApplicationLinkUserTypePermission_ApplicationLink" FromRole="ApplicationLinkUserTypePermission" ToRole="ApplicationLink" />
+          <NavigationProperty Name="UserType" Relationship="Self.FK_ApplicationLinkUserTypePermission_UserType" FromRole="ApplicationLinkUserTypePermission" ToRole="UserType" />
+        </EntityType>
+        <Association Name="FK_ApplicationLink_LanguageResource">
+          <End Role="LanguageResource" Type="Self.LanguageResource" Multiplicity="1" />
+          <End Role="ApplicationLink" Type="Self.ApplicationLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LanguageResource">
+              <PropertyRef Name="ResourceKey" />
+            </Principal>
+            <Dependent Role="ApplicationLink">
+              <PropertyRef Name="LanguageResourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationLinkUserTypePermission_ApplicationLink">
+          <End Role="ApplicationLink" Type="Self.ApplicationLink" Multiplicity="1" />
+          <End Role="ApplicationLinkUserTypePermission" Type="Self.ApplicationLinkUserTypePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationLink">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationLinkUserTypePermission">
+              <PropertyRef Name="ApplicationLinkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ApplicationLink">
+          <End Role="ApplicationLink" Type="Self.ApplicationLink" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationLink">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="DefaultLoginPage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_User_LastModifyUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_User_RegisteredByUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="RegisteredByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBBackupDetail_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DBBackupDetail" Type="Self.DBBackupDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBBackupDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documentation_DocumentationType">
+          <End Role="DocumentationType" Type="Self.DocumentationType" Multiplicity="1" />
+          <End Role="Documentation" Type="Self.Documentation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentationType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Documentation">
+              <PropertyRef Name="DocumentationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documentation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Documentation" Type="Self.Documentation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Documentation">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentationType_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DocumentationType" Type="Self.DocumentationType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentationType">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailServiceItem_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="EmailServiceItem" Type="Self.EmailServiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmailServiceItem">
+              <PropertyRef Name="LastModifyUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationLinkUserTypePermission_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="ApplicationLinkUserTypePermission" Type="Self.ApplicationLinkUserTypePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationLinkUserTypePermission">
+              <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DamaconEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ApplicationLinks" EntityType="Self.ApplicationLink" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="DBBackupDetails" EntityType="Self.DBBackupDetail" />
+          <EntitySet Name="DefaultLoginPages" EntityType="Self.DefaultLoginPage" />
+          <EntitySet Name="Documentations" EntityType="Self.Documentation" />
+          <EntitySet Name="DocumentationTypes" EntityType="Self.DocumentationType" />
+          <EntitySet Name="EmailServiceItems" EntityType="Self.EmailServiceItem" />
+          <EntitySet Name="EmailTaskResultItems" EntityType="Self.EmailTaskResultItem" />
+          <EntitySet Name="Holidays" EntityType="Self.Holiday" />
+          <EntitySet Name="LanguageMetas" EntityType="Self.LanguageMeta" />
+          <EntitySet Name="LanguageResources" EntityType="Self.LanguageResource" />
+          <EntitySet Name="LeaveTypes" EntityType="Self.LeaveType" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+          <EntitySet Name="WebConfigurations" EntityType="Self.WebConfiguration" />
+          <EntitySet Name="ApplicationLinkUserTypePermissions" EntityType="Self.ApplicationLinkUserTypePermission" />
+          <AssociationSet Name="FK_ApplicationLink_LanguageResource" Association="Self.FK_ApplicationLink_LanguageResource">
+            <End Role="LanguageResource" EntitySet="LanguageResources" />
+            <End Role="ApplicationLink" EntitySet="ApplicationLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationLinkUserTypePermission_ApplicationLink" Association="Self.FK_ApplicationLinkUserTypePermission_ApplicationLink">
+            <End Role="ApplicationLink" EntitySet="ApplicationLinks" />
+            <End Role="ApplicationLinkUserTypePermission" EntitySet="ApplicationLinkUserTypePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ApplicationLink" Association="Self.FK_User_ApplicationLink">
+            <End Role="ApplicationLink" EntitySet="ApplicationLinks" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_User_LastModifyUser" Association="Self.FK_Client_User_LastModifyUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_User_RegisteredByUser" Association="Self.FK_Client_User_RegisteredByUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Country" Association="Self.FK_User_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBBackupDetail_User" Association="Self.FK_DBBackupDetail_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DBBackupDetail" EntitySet="DBBackupDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documentation_DocumentationType" Association="Self.FK_Documentation_DocumentationType">
+            <End Role="DocumentationType" EntitySet="DocumentationTypes" />
+            <End Role="Documentation" EntitySet="Documentations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documentation_User" Association="Self.FK_Documentation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Documentation" EntitySet="Documentations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentationType_User" Association="Self.FK_DocumentationType_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DocumentationType" EntitySet="DocumentationTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailServiceItem_User" Association="Self.FK_EmailServiceItem_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="EmailServiceItem" EntitySet="EmailServiceItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserType" Association="Self.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationLinkUserTypePermission_UserType" Association="Self.FK_ApplicationLinkUserTypePermission_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="ApplicationLinkUserTypePermission" EntitySet="ApplicationLinkUserTypePermissions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DamaconModelStoreContainer" CdmEntityContainer="DamaconEntities">
+          <EntitySetMapping Name="ApplicationLinks">
+            <EntityTypeMapping TypeName="DamaconModel.ApplicationLink">
+              <MappingFragment StoreEntitySet="ApplicationLink">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="LanguageResourceID" ColumnName="LanguageResourceID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="LinkController" ColumnName="LinkController" />
+                <ScalarProperty Name="LinkAction" ColumnName="LinkAction" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DamaconModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateBirth" ColumnName="DateBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Prov" ColumnName="Prov" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CountryMobileCode" ColumnName="CountryMobileCode" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RegisteredByUserID" ColumnName="RegisteredByUserID" />
+                <ScalarProperty Name="RegisteredOnDateTime" ColumnName="RegisteredOnDateTime" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ClientPassword" ColumnName="ClientPassword" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CardCodeOld" ColumnName="CardCodeOld" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="CardCode" ColumnName="CardCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="DamaconModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CountryEN" ColumnName="CountryEN" />
+                <ScalarProperty Name="CountryIT" ColumnName="CountryIT" />
+                <ScalarProperty Name="CountryPhoneCode" ColumnName="CountryPhoneCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBBackupDetails">
+            <EntityTypeMapping TypeName="DamaconModel.DBBackupDetail">
+              <MappingFragment StoreEntitySet="DBBackupDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BackupTime" ColumnName="BackupTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DefaultLoginPages">
+            <EntityTypeMapping TypeName="DamaconModel.DefaultLoginPage">
+              <MappingFragment StoreEntitySet="DefaultLoginPages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DefaultLoginPage_LanguageID" ColumnName="DefaultLoginPage_LanguageID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documentations">
+            <EntityTypeMapping TypeName="DamaconModel.Documentation">
+              <MappingFragment StoreEntitySet="Documentation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DocumentationTypeID" ColumnName="DocumentationTypeID" />
+                <ScalarProperty Name="StoreSelectionType" ColumnName="StoreSelectionType" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentationTypes">
+            <EntityTypeMapping TypeName="DamaconModel.DocumentationType">
+              <MappingFragment StoreEntitySet="DocumentationType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TypeText" ColumnName="TypeText" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailServiceItems">
+            <EntityTypeMapping TypeName="DamaconModel.EmailServiceItem">
+              <MappingFragment StoreEntitySet="EmailServiceItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SendCondition" ColumnName="SendCondition" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SendTime" ColumnName="SendTime" />
+                <ScalarProperty Name="SMTPServer" ColumnName="SMTPServer" />
+                <ScalarProperty Name="SMTPUser" ColumnName="SMTPUser" />
+                <ScalarProperty Name="SMTPPassword" ColumnName="SMTPPassword" />
+                <ScalarProperty Name="SMTPPort" ColumnName="SMTPPort" />
+                <ScalarProperty Name="IsSSL" ColumnName="IsSSL" />
+                <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+                <ScalarProperty Name="RecipientEmail" ColumnName="RecipientEmail" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="LastSentResult" ColumnName="LastSentResult" />
+                <ScalarProperty Name="LastSentTime" ColumnName="LastSentTime" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DataDate" ColumnName="DataDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTaskResultItems">
+            <EntityTypeMapping TypeName="DamaconModel.EmailTaskResultItem">
+              <MappingFragment StoreEntitySet="EmailTaskResultItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SendCondition" ColumnName="SendCondition" />
+                <ScalarProperty Name="SentResult" ColumnName="SentResult" />
+                <ScalarProperty Name="SentDateTime" ColumnName="SentDateTime" />
+                <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+                <ScalarProperty Name="RecipientEmail" ColumnName="RecipientEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holidays">
+            <EntityTypeMapping TypeName="DamaconModel.Holiday">
+              <MappingFragment StoreEntitySet="Holidays">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="HolidayDate" ColumnName="HolidayDate" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanguageMetas">
+            <EntityTypeMapping TypeName="DamaconModel.LanguageMeta">
+              <MappingFragment StoreEntitySet="LanguageMeta">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LanguageResources">
+            <EntityTypeMapping TypeName="DamaconModel.LanguageResource">
+              <MappingFragment StoreEntitySet="LanguageResource">
+                <ScalarProperty Name="ResourceKey" ColumnName="ResourceKey" />
+                <ScalarProperty Name="EnglishValue" ColumnName="EnglishValue" />
+                <ScalarProperty Name="ItalianoValue" ColumnName="ItalianoValue" />
+                <ScalarProperty Name="MaxLenght" ColumnName="MaxLenght" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeaveTypes">
+            <EntityTypeMapping TypeName="DamaconModel.LeaveType">
+              <MappingFragment StoreEntitySet="LeaveType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LeaveTypeTextEN" ColumnName="LeaveTypeTextEN" />
+                <ScalarProperty Name="LeaveTypeTextIT" ColumnName="LeaveTypeTextIT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DamaconModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Prov" ColumnName="Prov" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="LastAccessTime" ColumnName="LastAccessTime" />
+                <ScalarProperty Name="LastAccessIP" ColumnName="LastAccessIP" />
+                <ScalarProperty Name="DefaultLoginPage" ColumnName="DefaultLoginPage" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="PitcurePath" ColumnName="PitcurePath" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="MonHours" ColumnName="MonHours" />
+                <ScalarProperty Name="TueHours" ColumnName="TueHours" />
+                <ScalarProperty Name="WedHours" ColumnName="WedHours" />
+                <ScalarProperty Name="ThuHours" ColumnName="ThuHours" />
+                <ScalarProperty Name="FriHours" ColumnName="FriHours" />
+                <ScalarProperty Name="SatHours" ColumnName="SatHours" />
+                <ScalarProperty Name="SunHours" ColumnName="SunHours" />
+                <ScalarProperty Name="WeeklyHours" ColumnName="WeeklyHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="DamaconModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserTypeEn" ColumnName="UserTypeEn" />
+                <ScalarProperty Name="UserTypeIT" ColumnName="UserTypeIT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebConfigurations">
+            <EntityTypeMapping TypeName="DamaconModel.WebConfiguration">
+              <MappingFragment StoreEntitySet="WebConfiguration">
+                <ScalarProperty Name="ConfigKey" ColumnName="ConfigKey" />
+                <ScalarProperty Name="ConfigValue" ColumnName="ConfigValue" />
+                <ScalarProperty Name="LastModifyUserID" ColumnName="LastModifyUserID" />
+                <ScalarProperty Name="LastModifyDateTime" ColumnName="LastModifyDateTime" />
+                <ScalarProperty Name="LastModifyIP" ColumnName="LastModifyIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationLinkUserTypePermissions">
+            <EntityTypeMapping TypeName="DamaconModel.ApplicationLinkUserTypePermission">
+              <MappingFragment StoreEntitySet="ApplicationLinkUserTypePermission">
+                <ScalarProperty Name="ApplicationLinkId" ColumnName="ApplicationLinkId" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="Disable" ColumnName="Disable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,115 @@
+﻿@using Damacon.DAL.i18n;
+@using Damacon.ClientWebApp.Models;
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+}
+
+@{
+    ViewBag.Title = Resources.StoreList;
+}
+@{
+    Layout = "~/Views/Shared/_LayoutPreLogin.cshtml";
+}
+
+<a href="/">
+    <h2 class="pagetitle">@Html.Raw(Resources.FidelityCard)</h2>
+</a>
+
+<h2 class="pagetitle">@Html.Raw(Resources.StoreList)</h2>
+<div class="text-right">
+    <div style="margin:10px">
+        @Html.ActionLink("IT", "StoreList", "About", new { culture = "it-IT" }, null)
+        <span>-</span>
+        @Html.ActionLink("EN", "StoreList", "About", new { culture = "en-US" }, null)
+    </div>
+</div>
+
+<div class="row form-group" style="margin-top:10px">
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-4 col-sm-4 col-10 mb-3">
+        <div class="form-group">
+            <label class="col-form-label">@Html.Raw(Resources.HM_Brand)</label>
+
+            @Html.DropDownList("BrandFilter",
+           new SelectList((System.Collections.IEnumerable)ViewData["Brands"], "ID", "Name"),
+           "",
+           new { @class = "form-control mb-3 headerFilters", data_id = "BrandID" })
+        </div>
+    </div>
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-4 col-sm-4 col-10">
+        <div class="form-group">
+            <label class="col-form-label">@Html.Raw(Resources.City)</label>
+
+            @Html.DropDownList("CityFilter",
+           new SelectList((System.Collections.IEnumerable)ViewData["StoreCities"]),
+           "",
+           new { @class = "form-control mb-3 headerFilters", data_id = "CityName" })
+        </div>
+    </div>
+    <div class="col-lg-1 col-1"></div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="col-md-3 col-11 mb-4">
+        <section class="card">
+            <div class="card-body" style="padding: .25rem;text-align:center;">
+                <div class="widget-summary">
+                    <div class="widget-summary-col widget-summary-col-icon">
+                        <div class="summary-icon" style="width: 40px;height: 40px;color:black;font-size: 2.2rem;">
+                            <a href="#:WebLink#" target="_blank"> <i class="fa fa-map-marker"></i></a>
+                        </div>
+                    </div>
+                    <div class="widget-summary-col">
+                        <div class="summary">
+                            <h4 style="" class="font-weight-semibold mt-3">#:WebName#</h4>
+                            <h6 style="">#:WebAddress# </h6>
+                        </div>
+                    </div>
+                </div>
+                <hr class="solid" style="margin: 1px 0 11px 0;">
+                <div>
+                    <div class="pull-left" style="width: 40px;height: 40px;color:black;font-size: 1.6rem;text-align:center">
+                        <a href="tel:#:Phone#" data-role="button">
+                            <i class="fa fa fa-phone"></i>
+                        </a>
+                    </div>
+                    <a href="tel:#:Phone#" data-role="button">
+                        <h4 style="" class="font-weight-semibold mt-3">#:Phone#</h4>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</script>
+
+
+
+@section additionaljs
+{
+    @(Html.Kendo().ListView<StoreModel>()
+    .Name("listView")
+    .TagName("div")
+    .ClientTemplateId("template")
+    .HtmlAttributes(new { @class = "row", style = "border-color: transparent;background-color: transparent;margin:10px;" })
+    .DataSource(dataSource =>
+    {
+        dataSource.Read(read => read.Action("StoreList_Read", "About").Data("additionalInfo"));
+    })
+    )
+
+    <script type="text/javascript">
+        function additionalInfo() {
+            return {
+                brandID: $('#BrandFilter').val(), cityName: $('#CityFilter').val()
+            };
+        }
+
+        $(".headerFilters").on("input", function () {
+            var listView = $('#listView').data("kendoListView")
+            listView.dataSource.read();
+        });
+    </script>
+
+}

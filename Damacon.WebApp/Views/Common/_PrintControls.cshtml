@@ -1,0 +1,11 @@
+﻿
+<form action="@Url.Action(ViewData["action"].ToString(), ViewData["controller"].ToString())" method="POST" class="exportForm">
+    <input type="hidden" id="export-data" name="selectedOptions" />
+    <input type="hidden" id="export-model" name="columnSettings" />
+    <button type="submit" class="k-button export" data-format="xlsx" data-title="Title1" value="">
+        <span class="k-icon k-i-file-excel k-icon-24"></span>
+    </button>
+    <button type="submit" class="k-button export" data-format="pdf" data-title="Title2" value="">
+        <span class="k-icon k-i-print k-icon-24"></span>
+    </button>
+</form>

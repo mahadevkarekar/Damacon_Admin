@@ -1,0 +1,120 @@
+﻿@using Damacon.WebApp.Models
+@using Damacon.DAL.i18n;
+@model LoginViewModel
+
+
+<!doctype html>
+<html class="fixed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <title>StoreD - Log In</title>
+    <meta name="keywords" content="Damacon StoreD" />
+    <meta name="description" content="">
+    <meta name="author" content="www.damacon.it/">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Web Fonts  -->
+    @Styles.Render("~/Content/OpenSans.css")
+
+    <!-- Vendor CSS -->
+    @Styles.Render("~/assets/vendor/bootstrap/css/bootstrap.css")
+    @Styles.Render("~/assets/vendor/font-awesome/css/font-awesome.css")
+
+    <!-- Theme CSS -->
+    @Styles.Render("~/assets/css/theme.css")
+
+    <!-- Skin CSS -->
+    @Styles.Render("~/assets/css/skins/default.css")
+
+    <!-- Head Libs -->
+    @Scripts.Render("~/assets/vendor/modernizr/modernizr.js")
+
+</head>
+<body>
+    <!-- start: page -->
+    <section class="body-sign">
+        <div class="center-sign">
+            <a href="/" class="logo float-left">
+                <img src="~/Assets/Images/Stored Logo.png" height="54" alt="StoreD" />
+            </a>
+
+            <div class="panel card-sign">
+                <div class="card-title-sign mt-3 text-right">
+                    <h2 class="text-uppercase font-weight-bold m-0"> </h2>
+                </div>
+                <div class="card-body" style="margin-top:70px;">
+                    
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group mb-3">
+                            <label>@Html.Raw(Resources.Username)</label>
+                            <div class="input-group input-group-icon">
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control form-control-lg" })
+                                <span class="input-group-addon">
+                                    <span class="icon icon-lg">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "field-validation-valid" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="clearfix">
+                                <label class="float-left">@Html.Raw(Resources.Password)</label>
+                                @*<a href="pages-recover-password.html" class="float-right">Lost Password?</a>*@
+                            </div>
+                            <div class="input-group input-group-icon">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-lg" })
+                                <span class="input-group-addon">
+                                    <span class="icon icon-lg">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "field-validation-valid" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary mt-2">@Html.Raw(Resources.SignIn)</button>
+                            </div>
+                        </div>
+
+                    }
+                    <br/>
+                    @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                </div>
+            </div>
+
+            <p class="text-justify text-muted mt-3 mb-3">
+            @Html.Raw(Resources.CopyrightMessage)
+            @Html.Raw(Resources.AccessMessage)
+            @Html.Raw(Resources.UnauthorizedAccessMessage)</p>
+            <p class="text-center text-muted " style="margin-top: -15px;">@Html.Raw(Resources.ContactUSMessage) <a href="http://www.damacon.it" target="_blank">www.damacon.it</a></p>
+        </div>
+    </section>
+    <!-- end: page -->
+    <!-- end: page -->
+    <!-- Vendor -->
+    @Scripts.Render("~/assets/vendor/jquery/jquery.js")
+    @Scripts.Render("~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js")
+    @Scripts.Render("~/assets/vendor/popper/umd/popper.min.js")
+    @Scripts.Render("~/assets/vendor/bootstrap/js/bootstrap.js")
+    @Scripts.Render("~/assets/vendor/common/common.js")
+    @Scripts.Render("~/assets/vendor/nanoscroller/nanoscroller.js")
+    @Scripts.Render("~/assets/vendor/jquery-placeholder/jquery-placeholder.js")
+
+    <!-- Theme Base, Components and Settings -->
+    @Scripts.Render("~/assets/js/theme.js")
+
+    <!-- Theme Initialization Files -->
+    @Scripts.Render("~/assets/js/theme.init.js")
+
+</body>
+</html>

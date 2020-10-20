@@ -1,0 +1,286 @@
+﻿@using Damacon.DAL.i18n;
+
+<script type="text/javascript">
+
+    function getKendoGrid() {
+        return $('@ViewData["gridName"].ToString()').data("kendoGrid");
+    }
+
+    function error_handler(e) {
+        if (e.errors) {
+            if (this.lastRequestType == "destroy") {
+                this.cancelChanges();
+            }
+            var grid = getKendoGrid();
+            grid.one("dataBinding", function (e) {
+                e.preventDefault();   // cancel grid rebind if error occurs
+            });
+            var message = "";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    function readDeletedCheckboxData() {
+        return { showDeleted: $('#ShowDeleted').is(":checked") };
+    }
+
+    $('#ShowDeleted').change(function () {
+        var grid = getKendoGrid();
+        grid.dataSource.read()
+    });
+
+    function dataBound(e) {
+        formatGridRows();
+    }
+
+    function formatGridRows() {
+        var grid = getKendoGrid();
+        var gridData = grid.dataSource.view();
+
+        for (var i = 0; i < gridData.length; i++) {
+            if (gridData[i].Deleted == true) {
+                grid.table.find("tr[data-uid='" + gridData[i].uid + "']").addClass("deleted-row");
+                grid.table.find("tr[data-uid='" + gridData[i].uid + "']").find(".k-grid-delete").hide();
+            }
+        }
+    }
+
+    function OnEdit(e) {
+        var editWindow = e.sender.editable.element.data("kendoWindow");
+        editWindow.wrapper.css({ width: ($(window).width() * 0.85) });
+        editWindow.wrapper.css({ left: (($(window).width() * 0.15)/2) });
+        e.container.find(".k-button.k-grid-cancel").css("background-color", "#d9514d");
+        if (e.model.Deleted == true) {
+            e.container.find(".k-button.k-grid-update").hide();
+        }
+        //Bind deactivate event to the Popup window
+        e.container.data("kendoWindow").bind("deactivate", function () {
+            applyFilter();
+        });
+
+        $('[data-val-number]').each(function () {
+            var el = $(this);
+            el.attr('data-val-number', '@Resources.M_OnlyPositiveNumberAllowed');
+        });
+    }
+
+    $(".export").click(function () {
+        var grid = getKendoGrid();
+        var options = {
+            format: $(this).data("format"),
+            exportFilters: getExportFilterJSON(),
+            sort : grid.dataSource.sort()
+        }
+        $("#export-data").val(encodeURIComponent(JSON.stringify(options)));
+        $("#export-model").val(encodeURIComponent(JSON.stringify(grid.columns)));
+    });
+
+    $(".create").click(function () {
+        var grid = getKendoGrid();
+        grid.addRow();
+    });
+
+    var searchboxTimeout;
+    $("#searchbox").keyup(function () {
+        var val = $('#searchbox').val();
+        if (val.length >= 3) {
+            //if you already have a timout, clear it
+            if(typeof searchboxTimeout != 'undefined'){
+                clearTimeout(searchboxTimeout);
+            }
+
+            //start new time, to perform ajax stuff in 700ms
+            searchboxTimeout = setTimeout(function() {
+                applyFilter();
+            },700);
+        }
+    });
+
+    $("#searchbox").on('input', function (e) {
+        var val = $('#searchbox').val();
+        if (val.length == 0)
+        {
+            applyFilter();
+        }
+    });
+
+    $(".headerFilters").change(function () {
+        if($(this).hasClass( "doNotRefresh" ))
+        {
+            return;
+        }
+        applyFilter();
+    });
+
+    $(".headerFilters").on("input", function() {
+        if($(this).hasClass( "doNotRefresh" ))
+        {
+            return;
+        }
+
+        if (this.value === ''){
+            applyFilter();
+        }
+    });
+
+    function applyFilter() {
+        var filterValue = getFilterJSON();
+        var grid = getKendoGrid();
+        $filter = [];
+        $filter.push({ field: "All", operator: "contains", value: encodeURIComponent(JSON.stringify(filterValue)) + "####" + encodeURIComponent(JSON.stringify(grid.columns)) });
+        grid.dataSource.filter($filter);
+    }
+
+    function getFilterJSON() {
+        var filterData = {};
+        filterData.genericSearchText = $('#searchbox').val();
+        var columnFilters = [];
+        $(".headerFilters").each(function (index) {
+            item = {}
+            item["Value"] = $(this).attr('data-id');
+
+            if($.isArray($(this).val())){
+                item["Text"] = $(this).val().join(",")
+            }
+            else{
+                item["Text"] = $(this).val();
+            }
+            
+
+            if($(this).is('select')){
+                item["DisplayText"] = $(this).find('option:selected').text();
+            }
+            else{
+                item["DisplayText"] = $(this).text();
+            }
+
+            if ($(this).attr('data-multicolumn') != undefined)
+            {
+                item["IsMultiColumn"] = $(this).attr('data-multicolumn');
+            }
+            if ($(this).attr('data-Operator') != undefined) {
+                item["Operator"] = $(this).attr('data-Operator');
+            }
+
+            if ($(this).attr('data-TrimStart') != undefined && item["Text"] != undefined) {
+                item["Text"] = item["Text"].replace(/^0+/, '');
+            }
+
+            if ($(this).attr('data-IsIncludeInGenericSearch') != undefined) {
+                item["IsIncludeInGenericSearch"] = $(this).attr('data-IsIncludeInGenericSearch');
+            }
+
+            if (item["Value"] != undefined) {
+                columnFilters.push({ 'Value': item["Value"], 'Text': item["Text"], 'IsMultiColumn': item["IsMultiColumn"], 'Operator': item["Operator"] , DisplayText : item["DisplayText"], IsIncludeInGenericSearch : item["IsIncludeInGenericSearch"] });
+            }
+        });
+        filterData.columnFilters = columnFilters;
+        return filterData;
+    }
+
+    function getExportFilterJSON() {
+        return getFilterJSON();;
+    }
+
+    $(document).ready(function () {
+        var grid = getKendoGrid();
+        grid.dataSource.bind("requestStart", onRequestStart);
+        grid.dataSource.bind("requestEnd", onRequestEnd);
+        grid.dataSource.bind("change", onDataSourceChnage);
+
+        @if(Request.QueryString.Count > 0)
+        {
+            @:applyFilter();
+        }
+    });
+
+    var sortState;
+
+    function OnRequestStartEx(e){
+        $('.create').prop('disabled', true);
+        this.lastRequestType = e.type;
+        var newState = JSON.stringify(this.sort());
+        if (newState != sortState) { //where sortState is a global variable
+            sortState = newState;
+            e.preventDefault();
+            this.query({ sort: this.sort(), page: 1, pageSize : @(ViewData["pageSize"] == null ? 20: ViewData["pageSize"]), filter : this.filter() });
+        }
+    }
+
+    function onRequestStart(e) {
+        $('.create').prop('disabled', true);
+        this.lastRequestType = e.type;
+        var newState = JSON.stringify(this.sort());
+        if (newState != sortState) { //where sortState is a global variable
+            sortState = newState;
+            e.preventDefault();
+            this.query({ sort: this.sort(), page: 1, pageSize : @(ViewData["pageSize"] == null ? 20: ViewData["pageSize"]), filter : this.filter() });
+        }
+    }
+
+    function onRequestEnd(e) {
+        $('.create').prop('disabled', false);
+    }
+
+    function onDataSourceChnage(e) {
+        sortState = JSON.stringify(e.sender.sort());
+    }
+
+    function getChartColors(){
+
+        return ["#E6194B","#3CB44B","#FFE119","#0082C8","#F58230","#911EB4","#46F0F0","#F032E6","#D2F53C","#FABEBE","#008080","#E6BEFF","#466E28","#FFFAC8","#800000","#AAFFC3","#808000","#FFD7B4","#000000"]
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    var openFlag = true;
+
+    function onDatemonthCalenderOpen(e) {
+        var dp = e.sender;
+        var calendar = dp.dateView.calendar;
+
+        if (openFlag) {
+            calendar.setOptions({
+                animation: false
+            });
+            openFlag = false;
+            calendar.navigateUp();
+        }
+
+
+        if (calendar.view().name === "year") {
+            calendar.element.find(".k-header").css("display", "none");
+        };
+
+        calendar.bind("navigate", function (e) {
+            var cal = e.sender;
+            var view = cal.view();
+
+            if (view.name === "year") {
+                cal.element.find(".k-header").css("display", "none");
+            } else {
+                var navFast = $(".k-nav-fast");
+
+                var dsa = cal.element.find(".k-header").css("display", "block");
+                navFast[0].innerText = navFast[0].innerText.slice(0, -5);
+            }
+
+        });
+    }
+
+    function onDatemonthCalenderClose(e) {
+        var calendar = e.sender.dateView.calendar;
+
+        calendar.unbind("navigate");
+        calendar.element.find(".k-header").css("display", "block");
+    }
+</script>

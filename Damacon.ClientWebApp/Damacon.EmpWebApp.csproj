@@ -1,0 +1,683 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F87FA1A8-D8B8-4EF7-8010-CFE887EBA867}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Damacon.ClientWebApp</RootNamespace>
+    <AssemblyName>Damacon.ClientWebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kendo.Mvc, Version=2017.3.1018.545, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Telerik\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Kendo.Mvc.Export, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Telerik\Kendo.Mvc.Export.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Documents.SpreadsheetStreaming, Version=2017.3.1009.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Telerik\Telerik.Documents.SpreadsheetStreaming.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip, Version=2017.3.1009.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Telerik\Telerik.Windows.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip.Extensions, Version=2017.3.1009.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Telerik\Telerik.Windows.Zip.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ModelMapper.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\StoreModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\css\custom.css" />
+    <Content Include="Assets\css\invoice-print.css" />
+    <Content Include="Assets\css\skins\default.css" />
+    <Content Include="Assets\css\skins\extension.css" />
+    <Content Include="Assets\css\skins\square-borders.css" />
+    <Content Include="Assets\css\theme-admin-extension.css" />
+    <Content Include="Assets\css\theme.css" />
+    <Content Include="Assets\css\timeout-dialog.css" />
+    <Content Include="Assets\Images\apple-touch-icon-114x114.png" />
+    <Content Include="Assets\Images\apple-touch-icon-120x120.png" />
+    <Content Include="Assets\Images\apple-touch-icon-152x152.png" />
+    <Content Include="Assets\Images\apple-touch-icon-180x180.png" />
+    <Content Include="Assets\Images\apple-touch-icon-72x72.png" />
+    <Content Include="Assets\Images\apple-touch-icon.png" />
+    <Content Include="Content\kendo\Bootstrap\loading-image.gif" />
+    <Content Include="Content\kendo\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Content\kendo\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="Content\kendo\kendo.bootstrap.min.css" />
+    <Content Include="Content\kendo\kendo.common-bootstrap.min.css" />
+    <Content Include="fonts\MinionPro\MinionPro-Bold.svg" />
+    <Content Include="fonts\MinionPro\MinionPro-Italic.svg" />
+    <Content Include="fonts\MinionPro\MinionPro-Medium.svg" />
+    <Content Include="fonts\MinionPro\MinionPro-Regular.svg" />
+    <Content Include="fonts\MinionPro\MinionPro-Semibold.svg" />
+    <Content Include="fonts\Roboto\Roboto-Italic.svg" />
+    <Content Include="fonts\Roboto\Roboto-Light.svg" />
+    <Content Include="fonts\Roboto\Roboto-Medium.svg" />
+    <Content Include="fonts\Roboto\Roboto-Regular.svg" />
+    <Content Include="Assets\Images\logoDamacon170.png" />
+    <Content Include="Assets\Images\Portrait_Placeholder.png" />
+    <Content Include="Assets\Images\Stored Logo.png" />
+    <Content Include="Assets\Images\timeout-icon.png" />
+    <Content Include="Assets\js\custom.js" />
+    <Content Include="Assets\js\pdf.js" />
+    <Content Include="Assets\js\pdf.worker.js" />
+    <Content Include="Assets\js\session-timeout.js" />
+    <Content Include="Assets\js\theme.admin.extension.js" />
+    <Content Include="Assets\js\theme.init.js" />
+    <Content Include="Assets\js\theme.js" />
+    <Content Include="Assets\js\timeout-dialog.js" />
+    <Content Include="Assets\vendor\bootstrap-maxlength\bootstrap-maxlength.js" />
+    <Content Include="Assets\vendor\bootstrap-multiselect\bootstrap-multiselect.css" />
+    <Content Include="Assets\vendor\bootstrap-multiselect\bootstrap-multiselect.js" />
+    <Content Include="Assets\vendor\bootstrap\bootstrap.js" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Assets\vendor\common\common.js" />
+    <Content Include="Assets\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Assets\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Assets\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\vendor\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Assets\vendor\fuelux\css\spinner.css" />
+    <Content Include="Assets\vendor\fuelux\js\spinner.js" />
+    <Content Include="Assets\vendor\ios7-switch\ios7-switch.js" />
+    <Content Include="Assets\vendor\isotope\isotope.js" />
+    <Content Include="Assets\vendor\jquery-appear\jquery-appear.js" />
+    <Content Include="Assets\vendor\jquery-browser-mobile\jquery.browser.mobile.js" />
+    <Content Include="Assets\vendor\jquery-maskedinput\jquery.maskedinput.js" />
+    <Content Include="Assets\vendor\jquery-nestable\jquery-nestable.js" />
+    <Content Include="Assets\vendor\jquery-placeholder\jquery-placeholder.js" />
+    <Content Include="Assets\vendor\jquery-ui\AUTHORS.txt" />
+    <Content Include="Assets\vendor\jquery-ui\external\jquery\jquery.js" />
+    <Content Include="Assets\vendor\jquery-ui\images\ui-icons_444444_256x240.png" />
+    <Content Include="Assets\vendor\jquery-ui\images\ui-icons_555555_256x240.png" />
+    <Content Include="Assets\vendor\jquery-ui\images\ui-icons_777620_256x240.png" />
+    <Content Include="Assets\vendor\jquery-ui\images\ui-icons_777777_256x240.png" />
+    <Content Include="Assets\vendor\jquery-ui\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Assets\vendor\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\vendor\jquery-ui\index.html" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.css" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.js" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Assets\vendor\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Assets\vendor\jquery-ui\LICENSE.txt" />
+    <Content Include="Assets\vendor\jquery-validation\additional-methods.js" />
+    <Content Include="Assets\vendor\jquery-validation\additional-methods.min.js" />
+    <Content Include="Assets\vendor\jquery-validation\jquery.validate.js" />
+    <Content Include="Assets\vendor\jquery-validation\jquery.validate.min.js" />
+    <Content Include="Assets\vendor\jqueryui-touch-punch\jqueryui-touch-punch.js" />
+    <Content Include="Assets\vendor\jquery\jquery.js" />
+    <Content Include="Assets\vendor\less\less.min.js" />
+    <Content Include="Assets\vendor\magnific-popup\jquery.magnific-popup.js" />
+    <Content Include="Assets\vendor\magnific-popup\magnific-popup.css" />
+    <Content Include="Assets\vendor\modernizr\modernizr.js" />
+    <Content Include="Assets\vendor\nanoscroller\nanoscroller.css" />
+    <Content Include="Assets\vendor\nanoscroller\nanoscroller.js" />
+    <Content Include="Assets\vendor\popper\esm\popper-utils.js" />
+    <Content Include="Assets\vendor\popper\esm\popper-utils.min.js" />
+    <Content Include="Assets\vendor\popper\esm\popper.js" />
+    <Content Include="Assets\vendor\popper\esm\popper.min.js" />
+    <Content Include="Assets\vendor\popper\popper-utils.js" />
+    <Content Include="Assets\vendor\popper\popper-utils.min.js" />
+    <Content Include="Assets\vendor\popper\popper.js" />
+    <Content Include="Assets\vendor\popper\popper.min.js" />
+    <Content Include="Assets\vendor\popper\umd\popper-utils.js" />
+    <Content Include="Assets\vendor\popper\umd\popper-utils.min.js" />
+    <Content Include="Assets\vendor\popper\umd\popper.js" />
+    <Content Include="Assets\vendor\popper\umd\popper.min.js" />
+    <Content Include="Assets\vendor\requirejs\requirejs.js" />
+    <Content Include="Assets\vendor\select2-bootstrap-theme\select2-bootstrap.css" />
+    <Content Include="Assets\vendor\select2-bootstrap-theme\select2-bootstrap.min.css" />
+    <Content Include="Assets\vendor\select2\css\select2.css" />
+    <Content Include="Assets\vendor\select2\css\select2.min.css" />
+    <Content Include="Assets\vendor\select2\js\i18n\af.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ar.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\az.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\bg.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\bs.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ca.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\cs.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\da.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\de.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\dsb.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\el.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\en.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\es.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\et.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\eu.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\fa.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\fi.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\fr.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\gl.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\he.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\hi.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\hr.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\hsb.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\hu.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\hy.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\id.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\is.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\it.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ja.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\km.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ko.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\lt.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\lv.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\mk.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ms.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\nb.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\nl.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\pl.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ps.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\pt-BR.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\pt.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ro.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\ru.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\sk.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\sl.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\sr-Cyrl.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\sr.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\sv.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\th.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\tr.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\uk.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\vi.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\zh-CN.js" />
+    <Content Include="Assets\vendor\select2\js\i18n\zh-TW.js" />
+    <Content Include="Assets\vendor\select2\js\select2.full.js" />
+    <Content Include="Assets\vendor\select2\js\select2.full.min.js" />
+    <Content Include="Assets\vendor\select2\js\select2.js" />
+    <Content Include="Assets\vendor\select2\js\select2.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\kendo\kendo.all.min.js" />
+    <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\kendo.culture.it-IT.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LayoutPostLogin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Damacon.DAL\Damacon.DAL.csproj">
+      <Project>{c53f4dd8-839c-4332-86ee-bc860c011dc1}</Project>
+      <Name>Damacon.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Damacon.SharedWeb\Damacon.SharedWeb.csproj">
+      <Project>{79d7bd13-095d-4b58-8067-7d1aa37ce431}</Project>
+      <Name>Damacon.SharedWeb</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\css\sass\base\_content-with-menu.scss" />
+    <Content Include="Assets\css\sass\base\_header-nav-main-mobile.scss" />
+    <Content Include="Assets\css\sass\base\_header-nav-main.scss" />
+    <Content Include="Assets\css\sass\base\_header.scss" />
+    <Content Include="Assets\css\sass\base\_helpers.scss" />
+    <Content Include="Assets\css\sass\base\_menu.scss" />
+    <Content Include="Assets\css\sass\base\_nanoscroll.scss" />
+    <Content Include="Assets\css\sass\base\_page-header.scss" />
+    <Content Include="Assets\css\sass\base\_sidebar-left-sizing.scss" />
+    <Content Include="Assets\css\sass\base\_sidebar-left.scss" />
+    <Content Include="Assets\css\sass\base\_sidebar-right.scss" />
+    <Content Include="Assets\css\sass\base\_skeleton.scss" />
+    <Content Include="Assets\css\sass\base\_tab-navigation.scss" />
+    <Content Include="Assets\css\sass\config\_directional.scss" />
+    <Content Include="Assets\css\sass\config\_helpers.scss" />
+    <Content Include="Assets\css\sass\config\_imports.scss" />
+    <Content Include="Assets\css\sass\config\_mixins.scss" />
+    <Content Include="Assets\css\sass\config\_variables.scss" />
+    <Content Include="Assets\css\sass\custom.scss" />
+    <Content Include="Assets\css\sass\gui\_accordions.scss" />
+    <Content Include="Assets\css\sass\gui\_alerts.scss" />
+    <Content Include="Assets\css\sass\gui\_animations.scss" />
+    <Content Include="Assets\css\sass\gui\_badges.scss" />
+    <Content Include="Assets\css\sass\gui\_buttons.scss" />
+    <Content Include="Assets\css\sass\gui\_call-to-action.scss" />
+    <Content Include="Assets\css\sass\gui\_cards.scss" />
+    <Content Include="Assets\css\sass\gui\_carousels.scss" />
+    <Content Include="Assets\css\sass\gui\_charts.scss" />
+    <Content Include="Assets\css\sass\gui\_codemirror.scss" />
+    <Content Include="Assets\css\sass\gui\_colorpicker.scss" />
+    <Content Include="Assets\css\sass\gui\_datatables.scss" />
+    <Content Include="Assets\css\sass\gui\_datepickers.scss" />
+    <Content Include="Assets\css\sass\gui\_dividers.scss" />
+    <Content Include="Assets\css\sass\gui\_dropdowns.scss" />
+    <Content Include="Assets\css\sass\gui\_dropzone.scss" />
+    <Content Include="Assets\css\sass\gui\_errors.scss" />
+    <Content Include="Assets\css\sass\gui\_fileupload.scss" />
+    <Content Include="Assets\css\sass\gui\_forms.scss" />
+    <Content Include="Assets\css\sass\gui\_gmaps.scss" />
+    <Content Include="Assets\css\sass\gui\_headings.scss" />
+    <Content Include="Assets\css\sass\gui\_images.scss" />
+    <Content Include="Assets\css\sass\gui\_ios7-switch.scss" />
+    <Content Include="Assets\css\sass\gui\_jqvmap.scss" />
+    <Content Include="Assets\css\sass\gui\_lightboxes.scss" />
+    <Content Include="Assets\css\sass\gui\_lists.scss" />
+    <Content Include="Assets\css\sass\gui\_loading-overlay.scss" />
+    <Content Include="Assets\css\sass\gui\_loading-progress.scss" />
+    <Content Include="Assets\css\sass\gui\_markdown.scss" />
+    <Content Include="Assets\css\sass\gui\_maxlength.scss" />
+    <Content Include="Assets\css\sass\gui\_misc.scss" />
+    <Content Include="Assets\css\sass\gui\_modals.scss" />
+    <Content Include="Assets\css\sass\gui\_multiselect.scss" />
+    <Content Include="Assets\css\sass\gui\_navs.scss" />
+    <Content Include="Assets\css\sass\gui\_nestable.scss" />
+    <Content Include="Assets\css\sass\gui\_notifications.scss" />
+    <Content Include="Assets\css\sass\gui\_paginations.scss" />
+    <Content Include="Assets\css\sass\gui\_portlets.scss" />
+    <Content Include="Assets\css\sass\gui\_pricing.scss" />
+    <Content Include="Assets\css\sass\gui\_progress-bars.scss" />
+    <Content Include="Assets\css\sass\gui\_scroll-to-top.scss" />
+    <Content Include="Assets\css\sass\gui\_scrollable.scss" />
+    <Content Include="Assets\css\sass\gui\_select2.scss" />
+    <Content Include="Assets\css\sass\gui\_sidebar-widgets.scss" />
+    <Content Include="Assets\css\sass\gui\_sliders.scss" />
+    <Content Include="Assets\css\sass\gui\_spinners.scss" />
+    <Content Include="Assets\css\sass\gui\_summernote.scss" />
+    <Content Include="Assets\css\sass\gui\_tables.scss" />
+    <Content Include="Assets\css\sass\gui\_tabs.scss" />
+    <Content Include="Assets\css\sass\gui\_tagsinput.scss" />
+    <Content Include="Assets\css\sass\gui\_timepicker.scss" />
+    <Content Include="Assets\css\sass\gui\_toggles.scss" />
+    <Content Include="Assets\css\sass\gui\_toolbars.scss" />
+    <Content Include="Assets\css\sass\gui\_treeviews.scss" />
+    <Content Include="Assets\css\sass\gui\_typography.scss" />
+    <Content Include="Assets\css\sass\gui\_userbox.scss" />
+    <Content Include="Assets\css\sass\gui\_widgets.scss" />
+    <Content Include="Assets\css\sass\gui\_wizard.scss" />
+    <Content Include="Assets\css\sass\gui\_word-rotator.scss" />
+    <Content Include="Assets\css\sass\invoice-print.scss" />
+    <Content Include="Assets\css\sass\layouts\_dark.scss" />
+    <Content Include="Assets\css\sass\partials\_calendar.scss" />
+    <Content Include="Assets\css\sass\partials\_invoice.scss" />
+    <Content Include="Assets\css\sass\partials\_landing.scss" />
+    <Content Include="Assets\css\sass\partials\_log-viewer.scss" />
+    <Content Include="Assets\css\sass\partials\_mailbox.scss" />
+    <Content Include="Assets\css\sass\partials\_media-gallery.scss" />
+    <Content Include="Assets\css\sass\partials\_search-results.scss" />
+    <Content Include="Assets\css\sass\partials\_sign.scss" />
+    <Content Include="Assets\css\sass\partials\_timeline.scss" />
+    <Content Include="Assets\css\sass\partials\_user-profile.scss" />
+    <Content Include="Assets\css\sass\theme-admin-extension.scss" />
+    <Content Include="Assets\css\sass\theme.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\vendor\bootstrap-multiselect\bootstrap-multiselect.less" />
+    <Content Include="Assets\vendor\bootstrap\bootstrap.less" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Assets\vendor\font-awesome\bower.json" />
+    <Content Include="Assets\vendor\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Assets\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\vendor\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Assets\vendor\font-awesome\less\animated.less" />
+    <Content Include="Assets\vendor\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Assets\vendor\font-awesome\less\core.less" />
+    <Content Include="Assets\vendor\font-awesome\less\fixed-width.less" />
+    <Content Include="Assets\vendor\font-awesome\less\font-awesome.less" />
+    <Content Include="Assets\vendor\font-awesome\less\icons.less" />
+    <Content Include="Assets\vendor\font-awesome\less\larger.less" />
+    <Content Include="Assets\vendor\font-awesome\less\list.less" />
+    <Content Include="Assets\vendor\font-awesome\less\mixins.less" />
+    <Content Include="Assets\vendor\font-awesome\less\path.less" />
+    <Content Include="Assets\vendor\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Assets\vendor\font-awesome\less\screen-reader.less" />
+    <Content Include="Assets\vendor\font-awesome\less\stacked.less" />
+    <Content Include="Assets\vendor\font-awesome\less\variables.less" />
+    <Content Include="Assets\vendor\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_animated.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_core.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_icons.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_larger.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_list.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_mixins.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_path.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_stacked.scss" />
+    <Content Include="Assets\vendor\font-awesome\scss\_variables.scss" />
+    <Content Include="Assets\vendor\jquery-ui\package.json" />
+    <Content Include="Assets\vendor\nanoscroller\jquery.nanoscroller.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\vendor\popper\esm\popper-utils.js.map" />
+    <Content Include="Assets\vendor\popper\esm\popper-utils.min.js.map" />
+    <Content Include="Assets\vendor\popper\esm\popper.js.map" />
+    <Content Include="Assets\vendor\popper\esm\popper.min.js.map" />
+    <Content Include="Assets\vendor\popper\popper-utils.js.map" />
+    <Content Include="Assets\vendor\popper\popper-utils.min.js.map" />
+    <Content Include="Assets\vendor\popper\popper.js.map" />
+    <Content Include="Assets\vendor\popper\popper.min.js.map" />
+    <Content Include="Assets\vendor\popper\umd\popper-utils.js.map" />
+    <Content Include="Assets\vendor\popper\umd\popper-utils.min.js.map" />
+    <Content Include="Assets\vendor\popper\umd\popper.js.map" />
+    <Content Include="Assets\vendor\popper\umd\popper.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\MinionPro\MinionPro-Bold.eot" />
+    <Content Include="fonts\MinionPro\MinionPro-Bold.ttf" />
+    <Content Include="fonts\MinionPro\MinionPro-Italic.eot" />
+    <Content Include="fonts\MinionPro\MinionPro-Italic.ttf" />
+    <Content Include="fonts\MinionPro\MinionPro-Medium.eot" />
+    <Content Include="fonts\MinionPro\MinionPro-Medium.ttf" />
+    <Content Include="fonts\MinionPro\MinionPro-Regular.eot" />
+    <Content Include="fonts\MinionPro\MinionPro-Regular.ttf" />
+    <Content Include="fonts\MinionPro\MinionPro-Semibold.eot" />
+    <Content Include="fonts\MinionPro\MinionPro-Semibold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\Roboto\Roboto-Italic.eot" />
+    <Content Include="fonts\Roboto\Roboto-Italic.ttf" />
+    <Content Include="fonts\Roboto\Roboto-Light.eot" />
+    <Content Include="fonts\Roboto\Roboto-Light.ttf" />
+    <Content Include="fonts\Roboto\Roboto-Medium.eot" />
+    <Content Include="fonts\Roboto\Roboto-Medium.ttf" />
+    <Content Include="fonts\Roboto\Roboto-Regular.eot" />
+    <Content Include="fonts\Roboto\Roboto-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\ShowShopping.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\kendo\fonts\glyphs\KendoUIGlyphs.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\kendo\fonts\glyphs\KendoUIGlyphs.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\kendo\fonts\glyphs\KendoUIGlyphs.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\kendo\fonts\glyphs\WebComponentsIcons.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\kendo\fonts\glyphs\WebComponentsIcons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\kendo\fonts\glyphs\WebComponentsIcons.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AboutFiles\Privacy_IT.rtf" />
+    <Content Include="AboutFiles\REGOLAMENTO_IT.rtf" />
+    <Content Include="fonts\Arial Narrow.ttf" />
+    <Content Include="AboutFiles\Privacy_EN.rtf" />
+    <Content Include="AboutFiles\REGOLAMENTO_EN.rtf" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <Content Include="Views\Shared\EditorTemplates\ChangePasswordView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RecoverPasswordView.cshtml" />
+    <Content Include="Views\Shared\_LayoutPreLogin.cshtml" />
+    <Content Include="Views\About\StoreList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ChangeEmailView.cshtml" />
+    <Content Include="Views\About\PrivacyPolicy.cshtml" />
+    <Content Include="Views\About\Regulations.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>10021</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:10021/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

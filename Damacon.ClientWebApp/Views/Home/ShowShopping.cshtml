@@ -1,0 +1,195 @@
+﻿@using Damacon.DAL.i18n;
+@using Damacon.ClientWebApp.Models;
+@using Damacon.DAL.Database.EF;
+@model ShoppingByClientData
+@{
+    ViewBag.Title = Resources.Shopping;
+}
+@{
+    Layout = "~/Views/Shared/_LayoutPostLogin.cshtml";
+}
+@{ClientLite user = ClientManager.GetLoggedInUser();}
+
+<div class="row">
+    <div class="col-lg-7 col-8">
+        <h2 class="pagetitle">@Html.Raw(Resources.AccountBalance)</h2>
+    </div>
+    <div class="col-lg-5 col-4">
+        <div class="header-right">
+            <div id="userbox" class="userbox">
+                <a href="#" data-toggle="dropdown">
+                    <div class="profile-info" data-lock-name="" data-lock-email="">
+                        @if (user != null)
+                        {
+                        <span class="name">@user.ClientName</span>
+                        }
+                    </div>
+
+                    <i class="fa custom-caret"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                    <ul class="list-unstyled">
+                        <li class="divider"></li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="@Url.Action("Logout", "Account", new { id = UrlParameter.Optional })"><i class="fa fa-power-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-4 col-sm-4 col-10 mb-3">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold" for="formGroupExampleInput">@Html.Raw(Resources.PublicWebsiteAvailableShoppingValue)</label>
+            <input type="text" class="form-control-sm text-right font-weight-bold" value="@("€ " + Model.AvailableShoppingValueForVoucher.ToString("0.00") + "")" readonly="readonly">
+        </div>
+    </div>
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-4 col-sm-4 col-10 pull-right">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold" for="formGroupExampleInput">@Html.Raw(Resources.PublicWebsiteVoucherAmount)</label>
+            <input type="text" class="form-control-sm text-right font-weight-bold" value="@("€ " + Model.AvailableVoucherAmount.ToString("0.00") + "")" readonly="readonly">
+        </div>
+    </div>
+    <div class="col-lg-1 col-1"></div>
+</div>
+
+@(Html.Kendo().Grid<ShoppingDetailView>()
+        .Name("manageShoppingDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.ReceiptDate).Title(Resources.Date).Format(UIExtensions.DateFormatKendo).Width(60).HtmlAttributes(new { style = "font-weight: bold;" });
+            columns.Bound(p => p.StoreName).Title(Resources.HM_Store).Width(100).HtmlAttributes(new { style = "font-weight: bold;" });
+            columns.ForeignKey(p => p.RecordType, (System.Collections.IEnumerable)ViewData["ShoppingRecordTypes"], "Value", "Text").Title(Resources.RecordType).Width(90).HtmlAttributes(new { style = "font-weight: bold;" });
+            columns.Bound(p => p.ShoppingValue).Title(Resources.Value).Width(70)
+            .ClientTemplate("<div class='ra'>€ #= kendo.toString(ShoppingValue, 'n2')#</div>")
+            .HtmlAttributes(new { style = "font-weight: bold;" });
+        })
+        .Pageable()
+        .Sortable(sortable => sortable.AllowUnsort(false))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(5)
+        .Read(read => read.Action("ShoppingDetail_Read", "Home"))
+    )
+)
+
+<div class="row form-group" style="margin-top:20px">
+    <div class="col-lg-12 col-12 text-center" style="font-size:50px">
+        <span id="SentBalanceEmail" style="color:#0088cc;cursor:pointer"><i class='fa fa-envelope '></i></span>
+    </div>
+</div>
+
+<div class="row form-group" style="margin-top:10px">
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-4 col-sm-4 col-10 mb-3">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold">@Html.Raw(Resources.Username)</label>
+            <input type="text" class="form-control-sm mb-3" value="@Model.UserName" readonly="readonly">
+            <br />
+            <button type="submit" class="btn btn-primary" id="ChangePassword">&nbsp;&nbsp; @Html.Raw(Resources.ChangePassword) &nbsp;&nbsp;</button>
+        </div>
+    </div>
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-1 col-1"></div>
+    <div class="col-lg-4 col-sm-4 col-10 pull-right">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold">@Html.Raw(Resources.Email)</label>
+            <input type="text" id="EmailAddress" class="form-control-sm mb-3" value="@Model.EmailAddress" readonly="readonly">
+            <br />
+            <button type="submit" class="btn btn-primary" id="ChangeEmail">&nbsp;&nbsp; @Html.Raw(Resources.ChangeEmail) &nbsp;&nbsp;</button>
+        </div>
+    </div>
+    <div class="col-lg-1 col-1"></div>
+</div>
+
+<div id="ChangePasswordDialog"></div>
+<script type="text/javascript">
+
+    $('#ChangePassword').click(function () {
+        var windowChangePasswordDialog = $("#ChangePasswordDialog");
+        windowChangePasswordDialog.kendoWindow({
+            modal: true,
+            width: "350px",
+            title: "@Html.Raw(Resources.ChangePassword)",
+            content: {
+                url: "GetChangePasswordView"
+            },
+            error: function (e) {
+                alert(e.xhr.statusText);
+                kendo.ui.progress(windowChangePasswordDialog.data("kendoWindow").element, false);
+            }
+        });
+
+        windowChangePasswordDialog.data("kendoWindow").center();
+        windowChangePasswordDialog.closest(".k-window").css({ top: 100 });
+        windowChangePasswordDialog.data("kendoWindow").open();
+        kendo.ui.progress(windowChangePasswordDialog.data("kendoWindow").element, true);
+    });
+
+</script>
+
+
+<div id="ChangeEmailDialog"></div>
+<script type="text/javascript">
+
+    $('#ChangeEmail').click(function () {
+        var windowChangeEmailDialog = $("#ChangeEmailDialog");
+        windowChangeEmailDialog.kendoWindow({
+            modal: true,
+            width: "350px",
+            title: "@Html.Raw(Resources.ChangeEmail)",
+            content: {
+                url: "GetChangeEmailView"
+            },
+            error: function (e) {
+                alert(e.xhr.statusText);
+                kendo.ui.progress(windowChangeEmailDialog.data("kendoWindow").element, false);
+            },
+            close: function (e) {
+                location.reload(true);
+            }
+        });
+
+        windowChangeEmailDialog.data("kendoWindow").center();
+        windowChangeEmailDialog.closest(".k-window").css({ top: 100 });
+        windowChangeEmailDialog.data("kendoWindow").open();
+        kendo.ui.progress(windowChangeEmailDialog.data("kendoWindow").element, true);
+    });
+
+</script>
+
+<script type="text/javascript">
+    $("#SentBalanceEmail").click(function () {
+        if ($('#EmailAddress').val() != '') {
+
+            if (confirm("@Html.Raw(Resources.AccountBalanceMessage)" + " " + $('#EmailAddress').val())) {
+
+                $.ajax
+                ({
+                    url: 'PrintAndEmailClientBalanceDetail',
+                    type: 'Post',
+                    datatype: 'application/json',
+                    contentType: 'application/json',
+                    success: function (result) {
+                        if (result.IsSuccess) {
+                            alert("@Html.Raw(Resources.M_EmailSentSuccessfully)");
+                        }
+                        else {
+                            alert(result.EmailError);
+                        }
+                    },
+                    error: function (e) {
+                        alert(e.Message);
+                    },
+                })
+            }
+        }
+    });
+</script>

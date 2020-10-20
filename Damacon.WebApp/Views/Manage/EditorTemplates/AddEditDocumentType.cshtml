@@ -1,0 +1,45 @@
+﻿@model Damacon.WebApp.Models.DocumentTypeModel
+
+@Html.Partial("~/Views/Common/_KendoPopupStyles.cshtml")
+
+<div class="container main-section-content">
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeText, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.TypeText, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "50" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Disable, new { @class = "col-form-label" })
+                <div>
+                    <label class="checkBoxContainer">
+                        @Html.CheckBoxFor(model => model.Disable, new { @class = "form-control-lg" })
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "col-form-label" })
+                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "280" })
+            </div>
+        </div>
+    </div>
+</div>
+
+

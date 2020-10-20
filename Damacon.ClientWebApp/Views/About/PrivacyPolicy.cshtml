@@ -1,0 +1,32 @@
+﻿@using Damacon.DAL.i18n;
+
+@{
+    ViewBag.Title = Resources.PrivacyAndCookies;
+}
+@{
+    Layout = "~/Views/Shared/_LayoutPreLogin.cshtml";
+}
+
+
+<a href="/">
+    <h2 class="pagetitle">@Html.Raw(Resources.FidelityCard)</h2>
+</a>
+
+<h3 class="pagetitle">@Html.Raw(Resources.PrivacyAndCookies)</h3>
+<div class="text-right">
+    <div style="margin:10px">
+        @Html.ActionLink("IT", "PrivacyPolicy", "About", new { culture = "it-IT" }, null)
+        <span>-</span>
+        @Html.ActionLink("EN", "PrivacyPolicy", "About", new { culture = "en-US" }, null)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12" style="margin-left: 10px;margin-right:10px">
+        <section class="card">
+            <div class="card-body">
+                @Html.Raw(ViewBag.EncodedHtml)
+            </div>
+        </section>
+    </div>
+</div>

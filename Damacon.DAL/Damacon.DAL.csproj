@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C53F4DD8-839C-4332-86EE-BC860C011DC1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Damacon.DAL</RootNamespace>
+    <AssemblyName>Damacon.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>..\ThirdParty\Telerik\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResults\GenericActionResult.cs" />
+    <Compile Include="DALFactory.cs" />
+    <Compile Include="Database\EF\ApplicationLink.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\ApplicationLinkUserTypePermission.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\Client.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\Country.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\DamaconModelEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DamaconModelEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\DamaconModelEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\DamaconModelEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DamaconModelEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\DBBackupDetail.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\DefaultLoginPage.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\Documentation.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\DocumentationType.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\EmailServiceItem.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\EmailTaskResultItem.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\Holiday.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\LanguageMeta.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\LanguageResource.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\LeaveType.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\User.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\UserType.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\EF\WebConfiguration.cs">
+      <DependentUpon>DamaconModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Partials\ApplicationLink.cs" />
+    <Compile Include="Database\Partials\ClassificaDataItem.cs" />
+    <Compile Include="Database\Partials\Client.cs" />
+    <Compile Include="Database\Partials\Country.cs" />
+    <Compile Include="Database\Partials\DashBoardChartData.cs" />
+    <Compile Include="Database\Partials\ClientLite.cs" />
+    <Compile Include="Database\Partials\UserLite.cs" />
+    <Compile Include="i18n\Abstract\BaseResourceProvider.cs" />
+    <Compile Include="i18n\Abstract\IResourceProvider.cs" />
+    <Compile Include="i18n\Concrete\DbResourceProvider.cs" />
+    <Compile Include="i18n\Concrete\XmlResourceProvider.cs" />
+    <Compile Include="i18n\CultureHelper.cs" />
+    <Compile Include="i18n\Entities\ResourceEntry.cs" />
+    <Compile Include="i18n\Resources.cs" />
+    <Compile Include="i18n\Utility\Resources.cs" />
+    <Compile Include="Operations\Concrete\BackupDAL.cs" />
+    <Compile Include="Operations\Concrete\ClientDAL.cs" />
+    <Compile Include="Operations\Concrete\ConfigDAL.cs" />
+    <Compile Include="Operations\Concrete\DocumentationDAL.cs" />
+    <Compile Include="Operations\Concrete\DocumentTypeDAL.cs" />
+    <Compile Include="Operations\Concrete\EmailServiceDAL.cs" />
+    <Compile Include="Operations\Concrete\HolidayDAL.cs" />
+    <Compile Include="Operations\Concrete\LanguageDAL.cs" />
+    <Compile Include="Operations\Concrete\ReportsDAL.cs" />
+    <Compile Include="Operations\Concrete\StaticDataDAL.cs" />
+    <Compile Include="Operations\Concrete\UserDAL.cs" />
+    <Compile Include="Operations\Contracts\IClientDAL.cs" />
+    <Compile Include="Operations\Contracts\IConfigDAL.cs" />
+    <Compile Include="Operations\Contracts\ICrudBaseDAL.cs" />
+    <Compile Include="Operations\Contracts\IBackupDAL.cs" />
+    <Compile Include="Operations\Contracts\IDocumentationDAL.cs" />
+    <Compile Include="Operations\Contracts\IDocumentTypeDAL.cs" />
+    <Compile Include="Operations\Contracts\IEmailServiceDAL.cs" />
+    <Compile Include="Operations\Contracts\IHolidayDAL.cs" />
+    <Compile Include="Operations\Contracts\ILanguageDAL.cs" />
+    <Compile Include="Operations\Contracts\IReportsDAL.cs" />
+    <Compile Include="Operations\Contracts\IStaticDataDAL.cs" />
+    <Compile Include="Operations\Contracts\IUserDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="i18n\Utility\ResourceBuilder.cs" />
+    <Compile Include="Utils\DateTimeExtensions.cs" />
+    <Compile Include="Utils\EmailServiceHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Database\EF\DamaconModelEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DamaconModelEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Database\EF\DamaconModelEntity.edmx.diagram">
+      <DependentUpon>DamaconModelEntity.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Database\EF\DamaconModelEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DamaconModelEntity.edmx</DependentUpon>
+      <LastGenOutput>DamaconModelEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\EF\DamaconModelEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DamaconModelEntity.edmx</DependentUpon>
+      <LastGenOutput>DamaconModelEntity.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\Migrations\1_InitialDBSetup.sql" />
+    <Content Include="Database\Migrations\2_ApplicationLinks.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

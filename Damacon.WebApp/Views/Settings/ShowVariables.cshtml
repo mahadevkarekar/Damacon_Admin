@@ -1,0 +1,152 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+
+@{
+    ViewBag.Title = Resources.HM_Variables;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-6 mb-3">
+        <section class="card card-primary" id="card-1" data-portlet-item="">
+            <header class="card-header portlet-handler ui-sortable-handle">
+                <h2 class="card-title">@Resources.ShoppingEmailTask</h2>
+            </header>
+            <div class="card-body" style="display: block;">
+                <table class="table table-responsive-md invoice-items">
+                    <thead>
+                        <tr class="text-dark">
+                            <th id="cell-item" class="font-weight-semibold">Key</th>
+                            <th id="cell-desc" class="font-weight-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{StoreName}</td>
+                            <td>Web Name of store selected in shopping</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{ClientName}</td>
+                            <td>Full name of client</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <section class="card card-primary" id="card-1" data-portlet-item="">
+            <header class="card-header portlet-handler ui-sortable-handle">
+                <h2 class="card-title">@Resources.VoucherEmailTask</h2>
+            </header>
+            <div class="card-body" style="display: block;">
+                <table class="table table-responsive-md invoice-items">
+                    <thead>
+                        <tr class="text-dark">
+                            <th id="cell-item" class="font-weight-semibold">Key</th>
+                            <th id="cell-desc" class="font-weight-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{StoreName}</td>
+                            <td>Web Name of store selected in shopping</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{ClientName}</td>
+                            <td>Full name of client</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <section class="card card-primary" id="card-1" data-portlet-item="">
+            <header class="card-header portlet-handler ui-sortable-handle">
+                <h2 class="card-title">@Resources.LoginEmailTask</h2>
+            </header>
+            <div class="card-body" style="display: block;">
+                <table class="table table-responsive-md invoice-items">
+                    <thead>
+                        <tr class="text-dark">
+                            <th id="cell-item" class="font-weight-semibold">Key</th>
+                            <th id="cell-desc" class="font-weight-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{StoreName}</td>
+                            <td>Web Name of store that registered this client</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{ClientName}</td>
+                            <td>Full name of client</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <section class="card card-primary" id="card-1" data-portlet-item="">
+            <header class="card-header portlet-handler ui-sortable-handle">
+                <h2 class="card-title">@Resources.ClientBonusBalanceEmailTask</h2>
+            </header>
+            <div class="card-body" style="display: block;">
+                <table class="table table-responsive-md invoice-items">
+                    <thead>
+                        <tr class="text-dark">
+                            <th id="cell-item" class="font-weight-semibold">Key</th>
+                            <th id="cell-desc" class="font-weight-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{StoreName}</td>
+                            <td>Web Name of store that registered this client</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{ClientName}</td>
+                            <td>Full name of client</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <section class="card card-primary" id="card-1" data-portlet-item="">
+            <header class="card-header portlet-handler ui-sortable-handle">
+                <h2 class="card-title">@Resources.RecoverClientPasswordEmailTask</h2>
+            </header>
+            <div class="card-body" style="display: block;">
+                <table class="table table-responsive-md invoice-items">
+                    <thead>
+                        <tr class="text-dark">
+                            <th id="cell-item" class="font-weight-semibold">Key</th>
+                            <th id="cell-desc" class="font-weight-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{ClientName}</td>
+                            <td>Full name of client</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-semibold text-dark">{ClientPassword}</td>
+                            <td>Password of the client</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

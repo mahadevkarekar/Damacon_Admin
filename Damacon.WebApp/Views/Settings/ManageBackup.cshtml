@@ -1,0 +1,97 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model BackupModel
+
+@{
+    ViewBag.Title = Resources.HM_Backup;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="col-form-label"></label>
+            <div>
+                <input type="submit" class="k-button k-primary create" value="@Resources.CreateBackup" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.BackupFileName, new { @class = "col-form-label" })
+            <div>
+                @Html.TextBoxFor(model => model.BackupFileName, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1" id="downLoadArea">
+        <div class="form-group">
+            <label class="col-form-label"></label>
+            <div>
+                <button type="submit" class="k-button k-primary" id="downloadBackupFile">
+                    <i class="fa fa-download" aria-hidden="true" style="margin-top: 4px; margin-bottom:4px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(model => model.BackupUserName, new { @class = "col-form-label" })
+            <div>
+                @Html.TextBoxFor(model => model.BackupUserName, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-right">
+
+    </div>
+</div>
+
+<div class="row" id="loadingArea">
+    <br /><br /><br /><br />
+    <div style="margin:auto auto">
+        <img src="~/Content/kendo/Bootstrap/loading-image.gif" /><br />
+        <label class="col-form-label">@Html.Raw(Resources.BackupCreationWaitingText)</label>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    @if (string.IsNullOrEmpty(Model.BackupFileName))
+    {
+         @:$('#downLoadArea').hide();
+        }
+
+    $('#loadingArea').hide();
+    $(".create").click(function () {
+        $('#loadingArea').show();
+        $.ajax
+         ({
+             url: 'CreateNewBackup',
+             type: 'POST',
+             datatype: 'application/json',
+             contentType: 'application/json',
+             success: function (result) {
+                 $('#loadingArea').hide();
+                 $('#downLoadArea').show();
+                 $('#BackupFileName').val(result.BackupFileName)
+                 $('#BackupUserName').val(result.BackupUserName)
+                 alert("@Html.Raw(Resources.BackupCreated)");
+             },
+             error: function (e) {
+                 alert("@Html.Raw(Resources.M_InternalServerError)");
+                 $('#loadingArea').hide();
+             },
+         })
+    });
+
+    $("#downloadBackupFile").click(function () {
+        window.open(
+            '@Url.Action("DownloadBackup", "Settings")/?filePath=' + $('#BackupFileName').val(),
+            '_blank' 
+            );
+    });
+</script>

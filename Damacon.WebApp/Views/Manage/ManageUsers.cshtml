@@ -1,0 +1,108 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model List<UserModel>
+
+@{
+    ViewBag.Title =Resources.HM_Users;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Common/_KendoStyles.cshtml")
+
+<div class="row form-group">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label class="col-form-label font-weight-bold">@Html.Raw(Resources.GenericSearch)</label>
+            <input type="text" class="form-control-sm" id="searchbox" placeholder="@Html.Raw(Resources.SearchMinimumCharacters)">
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.UserType</label>
+            @Html.DropDownList("UserTypeIDFilter",
+           new SelectList((System.Collections.IEnumerable)ViewData["UserTypes"], "ID", "UserTypeEn"),
+           "",
+           new { @class = "form-control form-control-sm mb-3 headerFilters",data_id = "UserTypeID" })
+        </div>
+    </div>
+    <div class="col-lg-2">
+      
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+             <label class="col-form-label">@Resources.State</label>
+            @Html.DropDownList("DisableFilter",
+           new SelectList((System.Collections.IEnumerable)ViewData["EnabledDisabledValues"], "Value", "Text", false),
+           "",
+           new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "Disable" })
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            @Html.Partial("~/Views/Common/_ShowDeletedControl.cshtml")
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <input type="submit" class="k-button k-primary create" value="@Resources.NewUser"/>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-3 text-right">
+        @Html.Partial("~/Views/Common/_PrintControls.cshtml", new ViewDataDictionary { { "controller", "Manage" }, {"action", "ExportUsersGrid" } })
+    </div>
+</div>
+
+@(Html.Kendo().Grid<UserModel>()
+        .Name("manageUserGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.Username).Width(120);
+            columns.Bound(p => p.UserTypeID).Hidden();
+            columns.Bound(p => p.UserTypeString).Title(Resources.UserType).Width(120);
+            columns.ForeignKey(p => p.Disable, (System.Collections.IEnumerable)ViewData["EnabledDisabledValues"], "Value", "Text")
+               .Title(Resources.State).Width(120);
+            columns.Bound(p => p.StoreID).Hidden();
+           // columns.Bound(p => p.StoreName).Title(Resources.HM_Store).Width(120);
+            columns.Bound(p => p.FullName).Width(120);
+            columns.Bound(p => p.MobilePhone).Width(120);
+            columns.Bound(p => p.Email).Width(150);
+            columns.Bound(p => p.LastAccessTime).Width(150).Format(@UIExtensions.DateTimeFormatKendo);
+            columns.Command(command =>
+            {
+                command.Edit().Text(" ");
+                command.Destroy().Text(" ").IconClass("k-icon k-i-delete");
+            }).Width(90);
+        })
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("AddEditUser").Window(w => w.Title(Resources.Edit)))
+        .Pageable()
+        .Sortable(sortable => sortable.AllowUnsort(false))
+        .Scrollable()
+        .HtmlAttributes(new { style = "height:440px;" })
+        .Events(e => { e.DataBound("dataBound"); e.Edit("OnEdit");  })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Filter(f => f.Add(a => a.Disable).IsEqualTo(false))
+        .Sort(sort => sort.Add("Username").Ascending())
+        .PageSize(20)
+        .Batch(false)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.ID);
+            model.Field(p => p.ID).DefaultValue(0);
+            model.Field(p => p.CountryID).DefaultValue(111);
+        })
+        .Create(update => update.Action("ManageUsersEditingPopup_Create", "Manage"))
+        .Read(read => read.Action("ManageUsersEditingPopup_Read", "Manage").Data("readDeletedCheckboxData"))
+        .Update(update => update.Action("ManageUsersEditingPopup_Update", "Manage").Type(HttpVerbs.Post))
+        .Destroy(update => update.Action("ManageUsersEditingPopup_Destroy", "Manage"))
+    )
+)
+
+
+@Html.Partial("~/Views/Common/_KendoScripts.cshtml", new ViewDataDictionary { { "gridName", "#manageUserGrid" }})

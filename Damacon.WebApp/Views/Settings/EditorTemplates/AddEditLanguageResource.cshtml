@@ -1,0 +1,45 @@
+﻿@model Damacon.WebApp.Models.LanguageResourceModel
+
+@Html.Partial("~/Views/Common/_KendoPopupStyles.cshtml")
+
+<div class="container main-section-content">
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ID, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.ID, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaxLenght, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.MaxLenght, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "5" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.EnglishValue, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.EnglishValue, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "250" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ItalianoValue, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.ItalianoValue, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "250" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "col-form-label" })
+                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "280" })
+            </div>
+        </div>
+    </div>
+</div>
+

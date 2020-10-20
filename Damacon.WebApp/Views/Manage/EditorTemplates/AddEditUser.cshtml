@@ -1,0 +1,250 @@
+﻿@using Damacon.DAL.i18n;
+@model Damacon.WebApp.Models.UserModel
+
+@*@Html.HiddenFor(model => model.ID)*@
+@Html.HiddenFor(model => model.PitcurePath)
+@Html.HiddenFor(model => model.DefaultLoginPage)
+
+@Html.Partial("~/Views/Common/_KendoPopupStyles.cshtml")
+
+<script type="text/javascript">
+    function image_success(e) {
+        var imagePath = e.response.ImageUrl;
+        $("#PitcurePath").val(imagePath).trigger("change");
+    }
+
+    $(document).ready(function () {
+        $(ImgPicture).attr("src", "../../UploadedImages/" + $("#PitcurePath").val());
+    });
+
+    $(document).ready(function () {
+        $("#StoreID").attr("disabled", $("#UserTypeID").val() != "3");
+        getUserPages();
+    });
+
+    $("#UserTypeID").change(function () {
+        if ($("#UserTypeID").val() == "3") {
+            $("#StoreID").attr("disabled", false);
+            $("#StoreID").attr("data-val", true);
+        }
+        else {
+            $("#StoreID").attr("disabled", true);
+            $("#StoreID").val(null);
+            $("#StoreID").attr("data-val", false);
+        }
+        $("#LoginPageSelect").html("");
+        getUserPages();
+    });
+
+    $("#LoginPageSelect").change(function () {
+        $("#DefaultLoginPage").val($("#LoginPageSelect").val()).trigger("change");
+    });
+
+    function getUserPages() {
+        var stateId = $("#UserTypeID").val();
+        $.ajax
+        ({
+            url: 'GetLoginPages',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                userTypeID: +stateId
+            }),
+            success: function (result) {
+                $.each(result, function (i, loginPage) {
+                    $("#LoginPageSelect").append
+                    ($('<option></option>').val(loginPage.ID).html(loginPage.DisplayText))
+                });
+                $("#LoginPageSelect").val($("#DefaultLoginPage").val());
+            },
+            error: function (e) {                
+            },
+        })
+    }
+
+</script>
+
+<div class="container main-section-content">
+    <div class="row">
+        <div class="col-md-3" style="max-height:220px;">
+            <img id="ImgPicture" src="" alt="profile picture" style="height: 100%;width:100%" onerror="this.src='../../Assets/Images/Portrait_Placeholder.png'"/>
+        </div>
+        <div class="col-md-9">
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Username, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "20", placeholder = Resources.M_UserNameHelpText })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "field-validation-valid" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, new { @class = "col-form-label" })
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "20", placeholder = Resources.M_PasswordHelpText })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "field-validation-valid" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Disable, new { @class = "col-form-label" })
+                        <div>
+                            <label class="checkBoxContainer">
+                                @Html.CheckBoxFor(model => model.Disable, new { @class = "form-control-lg" })
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserTypeID, new { @class = "col-form-label" })
+                        @Html.DropDownListFor(model => model.UserTypeID, new SelectList((System.Collections.IEnumerable)ViewData["UserTypes"], "ID", "UserTypeEn"), new { @class = "form-control form-control-sm mb-3" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                         </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProfileImageFile, new { @class = "col-form-label" })
+                        @(Html.Kendo().Upload()
+                            .Name("profileImageFile")
+                            .HtmlAttributes(new { aria_label = "profileImageFile" })
+                            .Validation(validation =>
+                            {
+                                validation.AllowedExtensions(new string[] { ".bmp", ".jpg", ".png", ".jpeg" });
+                                validation.MaxFileSize(2000000);
+
+                                })
+                            .Async(a =>a
+                            .Save("SaveImage", "Manage")
+                            .AutoUpload(true))
+                            .Events(e => e.Success((a) =>
+                            {
+                                return "image_success";
+                            }))
+                        )
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "field-validation-valid" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Surname, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(model => model.Surname, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25" })
+                        @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "field-validation-valid" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Gender, new { @class = "col-form-label" })
+                        <div>
+                            @Resources.Male:   @Html.RadioButtonFor(model => model.Gender, "Male")<br/>
+                            @Resources.Female: @Html.RadioButtonFor(model => model.Gender, "Female")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "80" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.City, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Prov, new { @class = "col-form-label"})
+                @Html.TextBoxFor(model => model.Prov, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "15" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ZipCode, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "5" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryID, new { @class = "col-form-label" })
+                @Html.DropDownListFor(model => model.CountryID, new SelectList((System.Collections.IEnumerable)ViewData["Countries"], "ID", "CountryEN"), new { @class = "form-control form-control-sm mb-3" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.MobilePhone, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.MobilePhone, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "20", placeholder = Resources.M_MobilePhoneHelpText })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.HomePhone, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.HomePhone, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "20", placeholder = Resources.M_HomePhoneHelpText })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "50", placeholder = Resources.M_EmailHelpText })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.DefaultLoginPage, new { @class = "col-form-label" })
+                <select id="LoginPageSelect" class="form-control form-control-sm mb-3 k-valid"
+                        data-val="true" data-val-required="DefaultLoginPage is a required field." data-bind="value:DefaultLoginPage">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastAccessTime, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.LastAccessTimeFormatted, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastAccessIP, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.LastAccessIP, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Email, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "50" })*@
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "col-form-label" })
+                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "280" })
+            </div>
+        </div>
+    </div>
+</div>

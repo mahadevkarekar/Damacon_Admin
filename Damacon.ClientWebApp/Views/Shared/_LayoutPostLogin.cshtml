@@ -1,0 +1,229 @@
+﻿@using Damacon.DAL.Database.EF;
+@using Damacon.DAL.i18n;
+@using Damacon.SharedWeb.Helpers;
+
+<!doctype html>
+<html class="fixed has-top-menu">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+
+    <title>@Html.Raw(Resources.FidelityCard)</title>
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="@Html.Raw(Resources.FidelityCard)">
+    <link rel="apple-touch-icon" href="~/Assets/Images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72"
+          href="~/Assets/Images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+          href="~/Assets/Images/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+          href="~/Assets/Images/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+          href="~/Assets/Images/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="~/Assets/Images/apple-touch-icon-180x180.png">
+
+    <!-- Vendor CSS -->
+    @Styles.Render("~/assets/vendor/bootstrap/css/bootstrap.css?v=1.5")
+
+    @Styles.Render("~/assets/vendor/font-awesome/css/font-awesome.css")
+    @Styles.Render("~/assets/vendor/magnific-popup/magnific-popup.css")
+
+    <!-- Specific Page Vendor CSS -->
+    @Styles.Render("~/assets/vendor/jquery-ui/jquery-ui.css?v=1.2")
+    @Styles.Render("~/assets/vendor/jquery-ui/jquery-ui.theme.css")
+    @Styles.Render("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css")
+
+
+    <!-- Theme CSS -->
+    @Styles.Render("~/assets/css/theme.css?v=1.9")
+
+    <!-- Skin CSS -->
+    @Styles.Render("~/assets/css/skins/default.css")
+
+    <!-- Theme Custom CSS -->
+    @Styles.Render("~/assets/css/custom.css?v=1.4")
+
+    @Styles.Render("~/Content/kendo/kendo.common-bootstrap.min.css?v=1.3")
+    @Styles.Render("~/Content/kendo/kendo.bootstrap.min.css?v=1.3")
+
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS", required: false)
+    }
+
+    <!-- Head Libs -->
+    @Scripts.Render("~/assets/vendor/modernizr/modernizr.js")
+
+    <!-- kendo -->
+    @Scripts.Render("~/assets/vendor/jquery/jquery.js")
+    @*@Scripts.Render("~/bundles/kendo")*@
+    @Scripts.Render("~/Scripts/kendo/kendo.all.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.aspnetmvc.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.culture.it-IT.min.js?v=1.2")
+
+    @Scripts.Render("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js")
+    @Scripts.Render("~/assets/vendor/magnific-popup/jquery.magnific-popup.js")
+
+    <style type="text/css">
+        /* Customize the label (the container) */
+        .checkBoxContainer {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 0px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            .checkBoxContainer input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: white;
+            border-radius: 0.2rem;
+            border-width: 2px;
+            border-style: inset;
+            border-color: lightgray;
+            border-image: initial;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .checkBoxContainer:hover input ~ .checkmark {
+            background-color: white;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .checkBoxContainer input:checked ~ .checkmark {
+            background-color: white;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .checkBoxContainer input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .checkBoxContainer .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 7px;
+            height: 14px;
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .loading-Area {
+            background-color: #cccccc;
+            opacity: 0.5;
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .loading-img {
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            margin-left: -32px; /* -1 * image width / 2 */
+            display: block;
+        }
+
+
+        .k-grid .ra {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <section class="body">
+        <div class="inner-wrapper">
+            <section role="main" class="content-body">
+
+                <!-- start: page -->
+                <div>
+                    @RenderBody()
+                </div>
+                <!-- end: page -->
+            </section>
+            <br/>
+            <p class="text-center text-muted">@Html.Raw(Resources.ClientWebsiteLoginPageLineBottom)</p>
+            
+        </div>
+    </section>
+
+    <!-- Vendor -->
+    @Scripts.Render("~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js")
+    @Scripts.Render("~/assets/vendor/popper/umd/popper.min.js")
+    @Scripts.Render("~/assets/vendor/bootstrap/js/bootstrap.js")
+    @Scripts.Render("~/assets/vendor/common/common.js")
+    @Scripts.Render("~/assets/vendor/nanoscroller/nanoscroller.js")
+    @Scripts.Render("~/assets/vendor/magnific-popup/jquery.magnific-popup.js")
+    @Scripts.Render("~/assets/vendor/jquery-placeholder/jquery-placeholder.js")
+    @Scripts.Render("~/assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js")
+    @Scripts.Render("~/assets/vendor/jquery-maskedinput/jquery.maskedinput.js")
+
+
+    @*< !--Specific Page Vendor-- >*@
+    @Scripts.Render("~/assets/vendor/jquery-ui/jquery-ui.js")
+    @Scripts.Render("~/assets/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js")
+    @Scripts.Render("~/assets/vendor/jquery-appear/jquery-appear.js")
+    @Scripts.Render("~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js")
+
+    @*< !--Theme Base, Components and Settings-- >*@
+    @Scripts.Render("~/assets/js/theme.js")
+
+    @*< !--Theme Custom-- >*@
+    @Scripts.Render("~/assets/js/custom.js")
+
+    @*< !--Theme Initialization Files-- >*@
+    @Scripts.Render("~/assets/js/theme.init.js")
+
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS", required: false)
+    }
+
+    @Scripts.Render("~/assets/js/session-timeout.js")
+
+
+    <script type="text/javascript">
+
+        window.checkSessionIntervalId = setInterval(function() { CheckSession("@Html.Raw(Resources.M_UserSessionExpired)"); }, (@HttpContext.Current.Session.Timeout * 60000) + 5000);
+
+        setUpTimeoutErrorCode("@Html.Raw(Resources.M_UserSessionExpiredWithManualLogout)");
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+
+@model List<HolidayModel>
+
+@{
+  ViewBag.Title = Resources.HM_StoreHolidays;
+}
+@{
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Common/_KendoStyles.cshtml")
+
+<style>
+  .HolidayClass {
+    text-align: center;
+    padding: 3px;
+    padding-top: 5px;
+
+    color: #fff;
+    background-color: #00a1f2;
+
+    margin: -5px;
+    min-height: 30px;
+  }
+
+  .k-grid-OnOpenEditHolidayWindow {
+    min-width: 45px !important;
+    margin-left: 3px !important;
+    margin-right: -3px !important;
+  }
+
+  .k-header .k-link {
+    text-align: center;
+  }
+
+  .k-grid-header .k-header {
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+
+  .cm
+  {
+    font-weight: bold !important;
+  }
+
+  .NoHolidayClass {
+    text-align: center;
+    padding: 3px;
+    padding-top: 5px;
+
+    margin: -5px;
+    min-height: 30px;
+  }
+</style>
+<div class="row">
+
+  <div class="col-md-2">
+    <div class="form-group">
+      <label class="col-form-label">@Resources.Year</label>
+      @Html.DropDownList("YearsFilter",
+          new SelectList((System.Collections.IEnumerable)ViewData["Years"], "Value", "Text", DateTime.Now.Year),
+          "",
+          new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "Year" })
+    </div>
+  </div>
+
+  <div class="col-md-7">
+  </div>
+
+  <div class="col-md-3 text-right">
+    @Html.Partial("~/Views/Common/_PrintControls.cshtml", new ViewDataDictionary { { "controller", "Administration" }, { "action", "ExportHolidaysGrid" } })
+  </div>
+</div>
+
+@(Html.Kendo().Grid<HolidayModel>()
+                    .Name("manageHolidayGrid")
+                    .Columns(columns =>
+                    {
+                      columns.Bound(p => p.Year).Hidden();
+                      columns.Bound(p => p.Month).Hidden();
+                      columns.Bound(p => p.Notes).Hidden();
+                      columns.Bound(p => p.MonthDescription).ClientTemplate("<div class='cm' >#=kendo.toString(MonthDescription)# </div>").Width(75);
+                      columns.Bound(p => p.Day_01.StringDay).Title("01").ClientTemplate("<div class='#=kendo.toString(Day_01.StyleClassItem)#' >#=kendo.toString(Day_01.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_02.StringDay).Title("02").ClientTemplate("<div class='#=kendo.toString(Day_02.StyleClassItem)#' >#=kendo.toString(Day_02.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_03.StringDay).Title("03").ClientTemplate("<div class='#=kendo.toString(Day_03.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_03.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_04.StringDay).Title("04").ClientTemplate("<div class='#=kendo.toString(Day_04.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_04.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_05.StringDay).Title("05").ClientTemplate("<div class='#=kendo.toString(Day_05.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_05.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_06.StringDay).Title("06").ClientTemplate("<div class='#=kendo.toString(Day_06.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_06.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_07.StringDay).Title("07").ClientTemplate("<div class='#=kendo.toString(Day_07.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_07.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_08.StringDay).Title("08").ClientTemplate("<div class='#=kendo.toString(Day_08.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_08.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_09.StringDay).Title("09").ClientTemplate("<div class='#=kendo.toString(Day_09.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_09.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_10.StringDay).Title("10").ClientTemplate("<div class='#=kendo.toString(Day_10.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_10.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_11.StringDay).Title("11").ClientTemplate("<div class='#=kendo.toString(Day_11.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_11.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_12.StringDay).Title("12").ClientTemplate("<div class='#=kendo.toString(Day_12.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_12.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_13.StringDay).Title("13").ClientTemplate("<div class='#=kendo.toString(Day_13.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_13.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_14.StringDay).Title("14").ClientTemplate("<div class='#=kendo.toString(Day_14.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_14.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_15.StringDay).Title("15").ClientTemplate("<div class='#=kendo.toString(Day_15.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_15.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_16.StringDay).Title("16").ClientTemplate("<div class='#=kendo.toString(Day_16.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_16.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_17.StringDay).Title("17").ClientTemplate("<div class='#=kendo.toString(Day_17.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_17.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_18.StringDay).Title("18").ClientTemplate("<div class='#=kendo.toString(Day_18.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_18.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_19.StringDay).Title("19").ClientTemplate("<div class='#=kendo.toString(Day_19.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_19.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_20.StringDay).Title("20").ClientTemplate("<div class='#=kendo.toString(Day_20.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_20.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_21.StringDay).Title("21").ClientTemplate("<div class='#=kendo.toString(Day_21.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_21.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_22.StringDay).Title("22").ClientTemplate("<div class='#=kendo.toString(Day_22.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_22.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_23.StringDay).Title("23").ClientTemplate("<div class='#=kendo.toString(Day_23.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_23.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_24.StringDay).Title("24").ClientTemplate("<div class='#=kendo.toString(Day_24.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_24.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_25.StringDay).Title("25").ClientTemplate("<div class='#=kendo.toString(Day_25.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_25.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_26.StringDay).Title("26").ClientTemplate("<div class='#=kendo.toString(Day_26.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_26.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_27.StringDay).Title("27").ClientTemplate("<div class='#=kendo.toString(Day_27.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_27.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_28.StringDay).Title("28").ClientTemplate("<div class='#=kendo.toString(Day_28.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_28.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_29.StringDay).Title("29").ClientTemplate("<div class='#=kendo.toString(Day_29.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_29.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_30.StringDay).Title("30").ClientTemplate("<div class='#=kendo.toString(Day_30.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_30.StringDay)# </div>").Width(38);
+                      columns.Bound(p => p.Day_31.StringDay).Title("31").ClientTemplate("<div class='#=kendo.toString(Day_31.StyleClassItem)#' style='text-align: center'>#=kendo.toString(Day_31.StringDay)# </div>").Width(38);
+                      columns.Command(command =>
+                      {
+                        command.Custom("OnOpenEditHolidayWindow").Text(" ").Click("OnOpenEditHolidayWindow").Visible("function(dataItem) { return !(dataItem.Deleted || dataItem.Disable) }").HtmlAttributes(new { data_toggle = "tooltip", title = Resources.Edit }).IconClass("k-icon k-i-edit");
+
+                      }).Width(50);
+                    })
+                    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                    .Sortable(sortable => sortable.AllowUnsort(true))
+                    .Scrollable()
+                    .HtmlAttributes(new { style = "height:520px;" })
+                    .Events(e => { e.DataBound("dataBound"); })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Sort(s =>
+                    {
+                      s.Add("Month").Ascending();
+                    })
+                    .Batch(false)
+                    .Events(events => events.Error("error_handler"))
+                    .Model(model =>
+                    {
+                      model.Id(p => p.ID);
+                      model.Field(p => p.ID).DefaultValue(0);
+                    })
+                    .Create(update => update.Action("ManageHolidayEditingPopup_Create", "Administration"))
+                    .Read(read => read.Action("ManageHolidayEditingPopup_Read", "Administration"))
+                    .Update(update => update.Action("ManageHolidayEditingPopup_Update", "Administration").Type(HttpVerbs.Post))
+                    .Destroy(update => update.Action("ManageHolidayEditingPopup_Destroy", "Administration"))
+                )
+)
+
+
+@Html.Partial("~/Views/Common/_KendoScripts.cshtml", new ViewDataDictionary { { "gridName", "#manageHolidayGrid" } })
+
+<div id="EditHolidayDialog"></div>
+
+
+<script>
+
+  function OnOpenEditHolidayWindow(e)
+  {
+    e.preventDefault();
+
+    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    openEditHolidayWindow(dataItem.Year, dataItem.Month, dataItem.Notes);
+
+    return false;
+  }
+
+  function openEditHolidayWindow(iYear, iMonth, Notes)
+  {
+    var windowEditHoliday = $("#EditHolidayDialog");
+    windowEditHoliday.kendoWindow({
+            modal: true,
+            draggable: false,
+            resizable: false,
+                title: "@Resources.Edit",
+                content: {
+                  url: "GetMonthHoliday",
+                  data: { yearId: +iYear, monthId: +iMonth, notes: Notes }
+                },
+                error: function (e) {
+                    alert(e.xhr.statusText);
+                  kendo.ui.progress(windowEditHoliday.data("kendoWindow").element, false);
+                },
+                deactivate: function () {
+                    applyFilter();
+                }
+            });
+
+    windowEditHoliday.data("kendoWindow").center();
+    windowEditHoliday.closest(".k-window").css({ top: 100 });
+    windowEditHoliday.closest(".k-window").css({ width: ($(window).width() * 0.90) });
+    windowEditHoliday.closest(".k-window").css({ left: (($(window).width() * 0.10) / 2) });
+    windowEditHoliday.data("kendoWindow").open();
+    kendo.ui.progress(windowEditHoliday.data("kendoWindow").element, true);
+    }
+</script>

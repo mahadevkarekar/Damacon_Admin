@@ -1,0 +1,182 @@
+﻿@using Damacon.DAL.i18n;
+@model Damacon.WebApp.Models.EmailServiceItemModel
+
+@Html.Partial("~/Views/Common/_KendoPopupStyles.cshtml")
+
+<div class="container main-section-content">
+    <div class="row form-group">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Description, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SendTime, new { @class = "col-form-label" })
+                @Html.DropDownListFor(model => model.SendTime, new SelectList((System.Collections.IEnumerable)ViewData["TimeIntervals"], "Value", "Text"), "", new { @class = "form-control form-control-sm" })
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Disable, new { @class = "col-form-label" })
+                <div>
+                    <label class="checkBoxContainer">
+                        @Html.CheckBoxFor(model => model.Disable, new { @class = "form-control-lg" })
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastSentResult, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.LastSentResult, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>*@
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastSentTime, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.LastSentTime, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SMTPServer, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.SMTPServer, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SMTPUser, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.SMTPUser, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SMTPPassword, new { @class = "col-form-label" })
+                @Html.PasswordFor(model => model.SMTPPassword, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SMTPPort, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.SMTPPort, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "5" })
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsSSL, new { @class = "col-form-label" })
+                <div>
+                    <label class="checkBoxContainer">
+                        @Html.CheckBoxFor(model => model.IsSSL, new { @class = "form-control-lg" })
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.Label(Resources.TestEmailRecipient, new { @class = "col-form-label" })
+                @Html.TextBox("TestEmailRecipient", "", new { @class = "form-control-sm" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label(" ", new { @class = "col-form-label" })
+                <div>
+                    <input type="submit" class="k-button k-primary SendTestEmail" value="@Resources.TestEmail" />
+                    <img id="loadingArea" src="~/Content/kendo/Bootstrap/loading-image.gif" style=" margin-left: 20px;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SendCondition, new { @class = "col-form-label" })
+                @Html.DropDownListFor(model => model.SendCondition, new SelectList((System.Collections.IEnumerable)ViewData["EmailConditions"], "Value", "Text"), "", new { @class = "form-control form-control-sm" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.DataDate, new { @class = "col-form-label" })
+                @Html.DropDownListFor(model => model.DataDate, new SelectList((System.Collections.IEnumerable)ViewData["EmailDataDates"], "Value", "Text"), "", new { @class = "form-control form-control-sm" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SenderEmail, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.SenderEmail, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RecipientEmail, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.RecipientEmail, new { @class = "form-control-sm", disabled = "disabled", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Subject, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Subject, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "100" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Body, new { @class = "col-form-label" })
+                @Html.TextAreaFor(model => model.Body, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "1000" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "col-form-label" })
+                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "1000" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#loadingArea').hide();
+    $(".SendTestEmail").click(function () {
+        $('#loadingArea').show();
+        $.ajax
+         ({
+             url: 'SendTestEmail',
+             type: 'POST',
+             datatype: 'application/json',
+             contentType: 'application/json',
+             data: JSON.stringify({
+                 server: $("#SMTPServer").val(),
+                 username: $("#SMTPUser").val(),
+                 password: $("#SMTPPassword").val(),
+                 port: $("#SMTPPort").val(),
+                 isSSL: $('#IsSSL').is(":checked"),
+                 recipientEmailAddress: $("#TestEmailRecipient").val(),
+             }),
+             success: function (result) {
+                 $('#loadingArea').hide();
+                 alert(result.messsage);
+             },
+             error: function (e) {
+                 alert("@Html.Raw(Resources.M_InternalServerError)");
+                 $('#loadingArea').hide();
+             },
+         })
+    });
+</script>

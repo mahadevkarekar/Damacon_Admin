@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cb3f51dd1130404098676d7ef9311e0d" Name="Diagram1">
+        <EntityTypeShape EntityType="DamaconModel.ApplicationLink" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.Client" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.Country" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.DBBackupDetail" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.DefaultLoginPage" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.Documentation" Width="1.5" PointX="8.5" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.DocumentationType" Width="1.5" PointX="5.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.EmailServiceItem" Width="1.5" PointX="5.25" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.EmailTaskResultItem" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.Holiday" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.LanguageMeta" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.LanguageResource" Width="1.5" PointX="1.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.LeaveType" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.User" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.UserType" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.WebConfiguration" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DamaconModel.ApplicationLinkUserTypePermission" Width="1.5" PointX="6" PointY="14.375" IsExpanded="true" />
+        <AssociationConnector Association="DamaconModel.FK_ApplicationLink_LanguageResource" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_ApplicationLinkUserTypePermission_ApplicationLink" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_User_ApplicationLink" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_Client_User_LastModifyUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_Client_User_RegisteredByUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_User_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_DBBackupDetail_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_Documentation_DocumentationType" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_Documentation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_DocumentationType_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_EmailServiceItem_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_User_UserType" ManuallyRouted="false" />
+        <AssociationConnector Association="DamaconModel.FK_ApplicationLinkUserTypePermission_UserType" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,144 @@
+﻿@using Damacon.WebApp.Models;
+@model ReportModelBase
+
+@Scripts.Render("~/assets/js/pdf.js")
+@*@Scripts.Render("~/assets/js/pdf.worker.js")*@
+
+@if (!string.IsNullOrWhiteSpace(Model.ReportPDFData))
+{
+<script type="text/javascript">
+
+    // atob() is used to convert base64 encoded PDF to binary-like data.
+    // (See also https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/
+    // Base64_encoding_and_decoding.)
+    var pdfData = atob('@Model.ReportPDFData');
+
+    // Disable workers to avoid yet another cross-origin issue (workers need
+    // the URL of the script to be loaded, and dynamically loading a cross-origin
+    // script does not work).
+    // PDFJS.disableWorker = true;
+
+    // The workerSrc property shall be specified.
+    PDFJS.workerSrc = '../../../assets/js/pdf.worker.js';
+
+    // Using DocumentInitParameters object to load binary data.
+    var loadingTask = PDFJS.getDocument({ data: pdfData });
+    loadingTask.promise.then(function (pdf) {
+        console.log('PDF loaded');
+
+        // Fetch the first page
+        var pageNumber = 1;
+        pdf.getPage(pageNumber).then(function (page) {
+            console.log('Page loaded');
+
+            var scale = 1.5;
+            var viewport = page.getViewport(scale);
+
+            // Prepare canvas using PDF page dimensions
+            var canvas = document.getElementById('the-canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+            renderTask.then(function () {
+                console.log('Page rendered');
+            });
+        });
+    }, function (reason) {
+        // PDF loading error
+        console.error(reason);
+    });
+</script>
+}
+
+<script type="text/javascript">
+  
+    $(".export").click(function () {
+        $("#ReportFormat").val($(this).data("format"));
+    });
+
+    $(".reportFilters").change(function () {
+        var canvas = document.getElementById('the-canvas');
+        if (canvas != null) {
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(".CompanyForStoreCombo").change(function () {
+        $(".StoreCombo").html("");
+        getStores();
+    });
+
+
+    function getStores() {
+        var stateId = $("#CompanyID").val();
+        $.ajax
+        ({
+            url: 'GetStoresByCompany',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                companyID: +stateId
+            }),
+            success: function (result) {
+                $("#StoreID").append('<option></option>')
+                $.each(result, function (i, storeData) {
+                    var option = $('<option></option>').val(storeData.ID).html(storeData.StoreName);
+                    $("#StoreID").append(option)
+                });
+            },
+            error: function (e) {
+            },
+        })
+    }
+</script>
+
+<script type="text/javascript">
+
+    $(".CompanyForEmployeeCombo").change(function () {
+        $(".EmployeeCombo").html("");
+        getEmployees();
+    });
+
+
+    function getEmployees() {
+        var stateId = $("#CompanyID").val();
+        $.ajax
+        ({
+            url: 'GetEmployeesByCompany',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                companyID: +stateId
+            }),
+            success: function (result) {
+                $("#EmployeeID").append('<option></option>')
+                $.each(result, function (i, storeData) {
+                    var option = $('<option></option>').val(storeData.ID).html(storeData.FullName);
+                    $("#EmployeeID").append(option)
+                });
+            },
+            error: function (e) {
+            },
+        })
+    }
+</script>
+
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <script type="text/javascript">
+        alert('@Html.Raw(Model.Error)');
+    </script>
+}

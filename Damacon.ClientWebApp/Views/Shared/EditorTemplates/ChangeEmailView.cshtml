@@ -1,0 +1,67 @@
+﻿@using Damacon.ClientWebApp.Models;
+@using Damacon.DAL.i18n;
+@model ChangeEmailViewModel
+
+
+<div id="ChangeEmailDialogMainDiv">
+    <div class="row form-group mb-3" style="margin:0px 0px 0px -15px">
+        <div class="col-md-11">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentEmail, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.CurrentEmail, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group mb-3" style="margin:0px 0px 0px -15px">
+        <div class="col-md-11">
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewEmail, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.NewEmail, new { @class = "form-control-sm" })
+                @Html.ValidationMessageFor(model => model.NewEmail, "", new { @class = "field-validation-valid" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group" style="margin:0px">
+        <div class="col-md-11">
+            <div class="form-group text-center">
+                <button type="button" class="k-button k-primary UpdateEmail" style="margin-top: 5px;">&nbsp;&nbsp;-&nbsp;&nbsp;@Html.Raw(Resources.Update)&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var kendoWindow = $("#ChangeEmailDialogMainDiv").closest("[data-role=window]").data("kendoWindow");
+
+    $('.UpdateEmail').click(function (e) {
+        var validator = $("#ChangeEmailDialogMainDiv").kendoValidator().data("kendoValidator");
+        if (validator.validate()) {
+
+            $.ajax({
+                url: 'UpdateEmail',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    changeEmailViewModel: {
+                        CurrentEmail: $('#CurrentEmail').val(), NewEmail: $('#NewEmail').val()
+                    }
+                }),
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        alert("@Html.Raw(Resources.M_EmailUpdatedSuccessfully)");
+                        kendoWindow.close();
+                    }
+                    else {
+                        alert(result.ErrorMessage);
+                    }
+                },
+                error: function (e) {
+                    alert(e);
+                },
+            });
+
+        }
+    });
+</script>

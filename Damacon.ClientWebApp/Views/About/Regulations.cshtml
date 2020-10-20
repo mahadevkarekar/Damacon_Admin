@@ -1,0 +1,31 @@
+﻿@using Damacon.DAL.i18n;
+
+@{
+    ViewBag.Title = Resources.RegulationPageTitle;
+}
+@{
+    Layout = "~/Views/Shared/_LayoutPreLogin.cshtml";
+}
+
+<a href="/">
+    <h2 class="pagetitle">@Html.Raw(Resources.FidelityCard)</h2>
+</a>
+
+<h2 class="pagetitle">@Html.Raw(Resources.RegulationPageTitle)</h2>
+<div class="text-right">
+    <div style="margin:10px">
+        @Html.ActionLink("IT", "Regulations", "About", new { culture = "it-IT" }, null)
+        <span>-</span>
+        @Html.ActionLink("EN", "Regulations", "About", new { culture = "en-US" }, null)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12" style="margin-left: 10px;margin-right:10px">
+        <section class="card">
+            <div class="card-body">
+                @Html.Raw(ViewBag.EncodedHtml)
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,370 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model List<ClientModel>
+
+@{
+    ViewBag.Title = Resources.HM_Clients;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Common/_KendoStyles.cshtml")
+@Html.Hidden("RedirectToBonus", Url.Action("ManageBonusNew", "Client"))
+<style type="text/css">
+    .k-grid tbody .k-grid-onNewShoppingRegistration, .k-grid tbody .k-grid-onGoToBonusPage {
+        width: 32px;
+        height: 27px;
+        min-width: 0px;
+        padding: 0px;
+    }
+
+        .k-grid tbody .k-grid-onGoToBonusPage .k-i-hyperlink-open {
+            margin-left: 4px;
+        }
+</style>
+
+<form action='' autocomplete='off'>
+    <div class="row form-group">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label class="col-form-label font-weight-bold" for="formGroupExampleInput">@Html.Raw(Resources.GenericSearch)</label>
+                <input type="text" class="form-control-sm" id="searchbox" placeholder="@Html.Raw(Resources.SearchMinimumCharacters)">
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label class="col-form-label">@Resources.CardCode</label>
+                @Html.TextBox("SelectedCardCode", "", new { @class = "form-control-sm headerFilters", data_id = "CardCode", data_plugin_maxlength = "", maxlength = "7", data_TrimStart = "true" })
+            </div>
+        </div>
+        <div class="col-lg-2">
+            
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label class="col-form-label">@Resources.BirthdayFrom</label>
+                @(Html.Kendo().DatePicker().
+                        Name("BirthdayFromDate")
+                        .Format("dd MMMM")
+                        .Depth(CalendarView.Month)
+                        .Start(CalendarView.Year)
+                        .Animation(false)
+                        .Min(new DateTime(2016, 01, 01))
+                        .Max(new DateTime(2016, 12, 31))
+                        .Footer("#: kendo.toString(data, 'm') #")
+                        .Events(e => { e.Open("onDatemonthCalenderOpen"); e.Close("onDatemonthCalenderClose"); })
+                        .HtmlAttributes(new { style = "width: 100%", title = "datepicker", @class = "dateFilters headerFilters", data_id = "BirthdayFromDate" }))
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label class="col-form-label">@Resources.BirthdayTo</label>
+                @(Html.Kendo().DatePicker().
+                        Name("BirthdayToDate")
+                        .Format("dd MMMM")
+                        .Depth(CalendarView.Month)
+                        .Start(CalendarView.Year)
+                        .Animation(false)
+                        .Min(new DateTime(2016, 01, 01))
+                        .Max(new DateTime(2016, 12, 31))
+                        .Footer("#: kendo.toString(data, 'm') #")
+                        .Events(e => { e.Open("onDatemonthCalenderOpen"); e.Close("onDatemonthCalenderClose"); })
+                        .HtmlAttributes(new { style = "width: 100%", title = "datepicker", @class = "dateFilters headerFilters", data_id = "BirthdayToDate" }))
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <div class="form-group">
+                <label class="col-form-label">@Resources.State</label>
+                @Html.DropDownList("DisableFilter",
+           new SelectList((System.Collections.IEnumerable)ViewData["EnabledDisabledValues"], "Value", "Text", false),
+           "",
+           new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "Disable" })
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <div class="">
+                @Html.Partial("~/Views/Common/_ShowDeletedControl.cshtml")
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-3">
+        <input type="submit" class="k-button k-primary create" value="@Resources.NewClient" />
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-3 text-right">
+        @Html.Partial("~/Views/Common/_PrintControls.cshtml", new ViewDataDictionary { { "controller", "Client" }, { "action", "ExportClientsGrid" } })
+    </div>
+</div>
+
+@(Html.Kendo().Grid<ClientModel>()
+        .Name("manageClientGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.FullName).Width(120);
+            columns.Bound(p => p.UserName).Width(120);
+            columns.ForeignKey(p => p.Disable, (System.Collections.IEnumerable)ViewData["EnabledDisabledValues"], "Value", "Text").Title(Resources.State).Width(90);
+            
+             
+            columns.Bound(p => p.RegisteredOnDateTime).Format(UIExtensions.DateFormatKendo).Width(120);
+            columns.Bound(p => p.DateBirth).Format(UIExtensions.DateFormatKendo).Width(120);
+            columns.Bound(p => p.CardCode).Width(120);
+            columns.Bound(p => p.MobilePhone).Width(120);  
+            columns.Bound(p => p.Email).Width(120);
+            columns.Command(command =>
+            {
+                command.Edit().Text(" ");
+                command.Custom("onNewShoppingRegistration").Text("€").Click("onNewShoppingRegistration").Visible("function(dataItem) { return !(dataItem.Deleted || dataItem.Disable) }").HtmlAttributes(new { data_toggle = "tooltip", title = Resources.NewShoppingRegistration });
+
+                command.Custom("onGoToBonusPage").Text(" ").IconClass("k-icon k-i-hyperlink-open").Click("onGoToBonusPage").Visible("function(dataItem) { return !(dataItem.Deleted || dataItem.Disable) }").HtmlAttributes(new { data_toggle = "tooltip", title = Resources.GoToBonusManagement });
+                command.Destroy().Text(" ").IconClass("k-icon k-i-delete").Visible("deleteVisible");
+            }).Width(225);
+        }) 
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("AddEditClient").Window(w => w.Title(Resources.Edit)))
+        .Pageable()
+        .Sortable(sortable => sortable.AllowUnsort(false))
+        .Scrollable()
+        .HtmlAttributes(new { style = "height:440px;" })
+        .Events(e => { e.DataBound("dataBound"); e.Edit("OnEditEx"); })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Filter(f => f.Add(a => a.Disable).IsEqualTo(false))
+            .Sort(sort => sort.Add("RegisteredOnDateTime").Descending())
+            .PageSize(20)
+            .Batch(false)
+            .Events(events => { events.Error("error_handler"); events.RequestEnd("OnDataSourceRequestEnd"); })
+            .Model(model =>
+            {
+                model.Id(p => p.ID);
+                model.Field(p => p.ID).DefaultValue(0);
+                model.Field(p => p.CountryID).DefaultValue(111);
+                model.Field(p => p.CountryMobileCode).DefaultValue("+39");
+            })
+            .Create(update => update.Action("ManageClientsEditingPopup_Create", "Client"))
+            .Read(read => read.Action("ManageClientsEditingPopup_Read", "Client").Data("readDeletedCheckboxData"))
+            .Update(update => update.Action("ManageClientsEditingPopup_Update", "Client").Type(HttpVerbs.Post))
+            .Destroy(update => update.Action("ManageClientsEditingPopup_Destroy", "Client"))
+        )
+)
+
+
+@Html.Partial("~/Views/Common/_KendoScripts.cshtml", new ViewDataDictionary { { "gridName", "#manageClientGrid" } })
+
+<div id="NewShoppingRegistrationDialog"></div>
+
+<!--Managing Custom Calender-->
+<script type="text/javascript">
+
+    function deleteVisible(dataItem) {
+        @if(UIExtensions.IsBackOfficerAndAboveUser())
+        {
+            @: return true;
+        }
+        else
+        {
+            @: return false;
+        }
+    }
+
+    $("#SelectedCardCode").focus();
+
+    var isOpenClientRegistration = false;
+    var isPrint = false;
+    var isEmail = false;
+    var isLogin = false;
+    var isBonusBalance = false;
+    function OnEditEx(e) {
+        isOpenClientRegistration = false;
+        $('<a class="k-button k-button-icontext k-primary k-grid-saveAndSendLoginByEmail" href="\\#">@Resources.SendLoginByEmail</a>').insertBefore(".k-grid-update");
+        $('<a class="k-button k-button-icontext k-primary k-grid-saveAndPrintClientLogin" href="\\#">@Resources.PrintClientLogin</a>').insertBefore(".k-grid-update");
+        $('<a class="k-button k-button-icontext k-primary k-grid-saveAndSendBonusBalanceByEmail" href="\\#">@Resources.SendBonusBalanceByEmail</a>').insertBefore(".k-grid-update");
+        $('<a class="k-button k-button-icontext k-primary k-grid-saveAndPrintBonusBalanceLogin" href="\\#">@Resources.PrintBonusBalance</a>').insertBefore(".k-grid-update");
+        $('<a class="k-button k-button-icontext k-primary k-grid-saveAndRegister" href="\\#">@Resources.SaveAndInsertBonusRegistration</a>').insertBefore(".k-grid-update");
+        OnEdit(e);
+
+        $(".k-grid-saveAndRegister").click(function (e) {
+            e.preventDefault();
+            isOpenClientRegistration = true;
+            var grid = getKendoGrid();
+            grid.saveChanges();
+        });
+
+        $(".k-grid-saveAndPrintClientLogin").click(function (e) {
+            e.preventDefault();
+            isPrint = true;
+            isLogin = true;
+            var grid = getKendoGrid();
+            grid.saveChanges();
+        });
+
+        $(".k-grid-saveAndSendLoginByEmail").click(function (e) {
+            e.preventDefault();
+            isEmail = true;
+            isLogin = true;
+            var grid = getKendoGrid();
+            grid.saveChanges();
+        });
+
+        $(".k-grid-saveAndPrintBonusBalanceLogin").click(function (e) {
+            e.preventDefault();
+            isPrint = true;
+            isBonusBalance = true;
+            var grid = getKendoGrid();
+            grid.saveChanges();
+        });
+
+        $(".k-grid-saveAndSendBonusBalanceByEmail").click(function (e) {
+            e.preventDefault();
+            isEmail = true;
+            isBonusBalance = true;
+            var grid = getKendoGrid();
+            grid.saveChanges();
+        });
+    }
+
+    function OnDataSourceRequestEnd(e) {
+        try {
+            if ((e.type == "create" || e.type == "update") && e.response != null && e.response.Data != null) {
+                if (isOpenClientRegistration) {
+                    openShoppingRegistrationWindow(e.response.Data[0].ID);
+                }
+                if (isPrint || isEmail) {
+                    if (isLogin) {
+                        printOrEmailClientLogin(e.response.Data[0].ID);
+                    }
+                    else if (isBonusBalance) {
+                        printOrEmailClientBonusBalance(e.response.Data[0].ID);
+                    }
+                }
+            }
+        }
+        catch (e) {
+            clearFlags();
+            alert(e);
+        }
+    }
+
+    function printOrEmailClientLogin(clientId) {
+        $.ajax
+                    ({
+                        url: 'PrintAndEmailClientLoginDetail',
+                        type: 'Post',
+                        datatype: 'application/json',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            clientID: clientId, isPrint: isPrint, isEmail: isEmail
+                        }),
+                        success: function (result) {
+                            if (result.IsSuccess) {
+                                if (isPrint) {
+                                    downLoadPDF(result.PrintData);
+                                }
+                                else if (isEmail) {
+                                    alert("@Resources.M_EmailSentSuccessfully");
+                                }
+                            }
+                            else {
+                                alert(result.PrintError + result.EmailError);
+                            }
+
+                            clearFlags();
+                        },
+                        error: function (e) {
+                            clearFlags();
+                            alert(e);
+                        },
+                    });
+    }
+
+    function printOrEmailClientBonusBalance(clientId) {
+        $.ajax
+                    ({
+                        url: 'PrintAndEmailClientBalanceDetail',
+                        type: 'Post',
+                        datatype: 'application/json',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            clientID: clientId, isPrint: isPrint, isEmail: isEmail
+                        }),
+                        success: function (result) {
+                            if (result.IsSuccess) {
+                                if (isPrint) {
+                                    downLoadPDF(result.PrintData);
+                                }
+                                else if (isEmail) {
+                                    alert("@Resources.M_EmailSentSuccessfully");
+                                }
+                            }
+                            else {
+                                alert(result.PrintError + result.EmailError);
+                            }
+
+                            clearFlags();
+                        },
+                        error: function (e) {
+                            clearFlags();
+                            alert(e);
+                        },
+                    });
+    }
+
+    function clearFlags() {
+        isOpenClientRegistration = false;
+        isPrint = false;
+        isEmail = false;
+        isLogin = false;
+        isBonusBalance = false;
+    }
+</script>
+
+<!--New Shopping Registration-->
+<script type="text/javascript">
+
+    $('#searchbox').val('@Request.QueryString["clientID"]');
+
+    function onNewShoppingRegistration(e) {
+
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        openShoppingRegistrationWindow(dataItem.ID);
+
+    }
+
+    function openShoppingRegistrationWindow(clientID) {
+        var windowNewShoppingRegistration = $("#NewShoppingRegistrationDialog");
+        windowNewShoppingRegistration.kendoWindow({
+            modal: true,
+            width: "950px",
+            title: "@Resources.Edit",
+            content: {
+                url: "AddShoppingDetailByClient",
+                data: { clientID: clientID }
+            },
+            error: function (e) {
+                alert(e.xhr.statusText);
+                kendo.ui.progress(windowNewShoppingRegistration.data("kendoWindow").element, false);
+            }
+        });
+
+        windowNewShoppingRegistration.data("kendoWindow").center();
+        windowNewShoppingRegistration.closest(".k-window").css({ top: 100 });
+        windowNewShoppingRegistration.closest(".k-window").css({ width: ($(window).width() * 0.90) });
+        windowNewShoppingRegistration.closest(".k-window").css({ left: (($(window).width() * 0.10) / 2) });
+        windowNewShoppingRegistration.data("kendoWindow").open();
+        kendo.ui.progress(windowNewShoppingRegistration.data("kendoWindow").element, true);
+    }
+
+    function onGoToBonusPage(e) {
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var url = $("#RedirectToBonus").val();
+        location.href = url + "?clientID=" + dataItem.FullName;
+    }
+</script>
+
+@Scripts.Render("~/assets/js/pdf.js")
+
+@Html.Partial("~/Views/Common/_PrintPdfData.cshtml")

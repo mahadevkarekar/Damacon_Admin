@@ -1,0 +1,331 @@
+﻿@using Damacon.DAL.i18n;
+@model Damacon.WebApp.Models.ClientModel
+
+@Html.Partial("~/Views/Common/_KendoPopupStyles.cshtml")
+
+<style type="text/css">
+    .k-multiselect-wrap>.k-input{
+        float: right;
+        margin-right: -40px;
+    }
+</style>
+
+@Html.HiddenFor(model => model.ID)
+@Html.HiddenFor(model => model.StoresDisplayText)
+<div class="container main-section-content">
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control-sm", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ClientPassword, new { @class = "col-form-label" })
+                <div class="input-group">
+                    @Html.PasswordFor(model => model.ClientPassword, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25", autocomplete = "off" })
+                    <span class="input-group-addon toggle-password" toggle="#ClientPassword">
+                        <span class="icon"><i class="fa fa-fw fa-eye field-icon"></i></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="col-form-label"><br/></label>
+                <div class="input-group">
+                    <input type="submit" class="k-button k-primary generatePassword" value="@Html.Raw(Resources.GeneratePassword)" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Disable, new { @class = "col-form-label" })
+                <div>
+                    <label class="checkBoxContainer">
+                        @Html.CheckBoxFor(model => model.Disable, new { @class = "form-control-lg" })
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CardCode, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.CardCode, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "7" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="col-form-label" data-toggle="tooltip" title="@Html.Raw(Resources.ClientAvailableReceiptForBonusToolTip)">
+                        @Html.Raw(Resources.AvailableReceiptForBonus)
+                        <span class='k-icon k-i-info'></span>
+                    </label>
+                    @Html.TextBox("AvailableReceiptForBonus_Client", "", new { @class = "form-control-sm text-right", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="col-form-label" data-toggle="tooltip" title="@Html.Raw(Resources.MissingReceiptForBonusToolTip)">
+                        @Html.Raw(Resources.MissingReceiptForBonus)
+                        <span class='k-icon k-i-info'></span>
+                    </label>
+                    @Html.TextBox("MissingReceiptForBonus_Client", "", new { @class = "form-control-sm text-right", disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label id="UseThisBonusLabel" class="col-form-label">
+                    @Html.Raw(Resources.AvailableVoucher)
+                </label>
+                @(Html.Kendo().MultiSelect()
+                    .Name("ActiveVoucherIDs")
+                    .DataTextField("VoucherAmount")
+                    .DataValueField("ID")
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("AddEditShoppingDetail_GetVoucher", "Client").Data("function readAdditionalData(){ return {clientID: $('#ID').val(), receiptDate: (new Date()).toISOString(), shoppingDetailID : 0 }}");
+                        });
+                    })
+                .AutoClose(false)
+                .TagMode(TagMode.Single)
+                .Placeholder("")
+                .TagTemplate(string.Format(Resources.SelectedVoucher, "#:values.length#", "#:values.length * 50#"))
+                .ItemTemplate("&nbsp;€ #:kendo.toString(data.VoucherAmount,'n2')# &nbsp;&nbsp; <span style='color:red'>" + Resources.UseBefore + ":</span>  #:data.ExpiryDataFormated# ")
+                )
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25" })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "field-validation-valid" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Surname, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Surname, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25" })
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "field-validation-valid" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateBirth, new { @class = "col-form-label" })
+                @(Html.Kendo().DatePickerFor(model => model.DateBirth).HtmlAttributes(new { style = "width: 100%", title = "datepicker" }))
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gender, new { @class = "col-form-label" })
+                <div>
+                    @Html.Raw(Resources.Male):   @Html.RadioButtonFor(model => model.Gender, "Male")<br />
+                    @Html.Raw(Resources.Female): @Html.RadioButtonFor(model => model.Gender, "Female")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryID, new { @class = "col-form-label" })
+                @Html.DropDownListFor(model => model.CountryID, new SelectList((System.Collections.IEnumerable)ViewData["Countries"], "ID", UIExtensions.GetCountryColumn()), new { @class = "form-control form-control-sm mb-3" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "80" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.City, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "25" })
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Prov, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.Prov, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "15" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ZipCode, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "5" })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryMobileCode, new { @class = "col-form-label" })
+                @Html.DropDownListFor(model => model.CountryMobileCode, new SelectList((System.Collections.IEnumerable)ViewData["Countries"], "CountryPhoneCode", "CountryNameAndCode"), new { @class = "form-control form-control-sm mb-3" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.MobilePhoneEx, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.MobilePhoneEx, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "20"})
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.HomePhone, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.HomePhone, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "20", placeholder = Resources.M_HomePhoneHelpText })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "col-form-label" })
+                @Html.TextBoxFor(model => model.EmailEx, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "50", placeholder = Resources.M_EmailHelpText })
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "col-form-label" })
+                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control-sm", data_plugin_maxlength = "", maxlength = "280" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-sm-6">
+            @Html.Raw(Resources.ShoppedInStores)
+        </div>
+        <div class="col-sm-6">
+            @Html.ActionLink(Resources.GoToBonusManagement, "ManageBonus", null, new { @class = "clientID pull-right", target = "_blank" })
+        </div>
+    </div>
+    <div class="card">
+        <div id="storeList" class="row addEditInfo">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#CardCode').change(function () {
+        $('#UserName').val($('#CardCode').val().replace(/^0+/, '')).trigger("change");
+    });
+
+    $(".toggle-password").click(function () {
+
+        $(this).find("i").toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+
+    $(document).ready(function () {
+        @if (UIExtensions.HasUserEditAccess(3))
+        {
+            @:$("#RegisteredByStoreID").val($("#RegisteredByStoreID option:first").val()).trigger("change");
+            @:$("#RegisteredByStoreID").attr('disabled', 'disabled');
+        }
+        $('#storeList').html($('#StoresDisplayText').val());
+
+        $('.clientID').attr('href', function (index, value) {
+            return value + '?clientID=' + $('#CardCode').val();
+        });
+
+        getClientAvailableReceiptValueForBonus();
+
+        var multiselect = $("#ActiveVoucherIDs").data("kendoMultiSelect");
+        multiselect.bind("change", onVoucherSelectionChange);
+        multiselect.bind("dataBound", onVoucherSelectionDataBound);
+        $("#ActiveVoucherIDs").data("kendoMultiSelect").dataSource.read();
+
+        $('#Notes').val($('#Notes').val()).trigger("change");
+    });
+
+    function onVoucherSelectionChange() {
+        var multiSelect = $('#ActiveVoucherIDs').data("kendoMultiSelect");
+        multiSelect.value([]);
+    }
+
+    function onVoucherSelectionDataBound() {
+        var totalVoucherAmount = 0;
+        var multiSelect = $('#ActiveVoucherIDs').data("kendoMultiSelect");
+        var multiSelectData = multiSelect.dataSource.view();
+
+        for (var i = 0; i < multiSelectData.length; i++) {
+            totalVoucherAmount += multiSelectData[i].VoucherAmount;
+        }
+        multiSelect.setOptions({ placeholder: kendo.toString(totalVoucherAmount, 'n2') + ' €' });
+
+        if (totalVoucherAmount > 0) {
+            $('.k-multiselect-wrap').css("background-color", "lightgreen");
+        }
+    }
+
+    $(".generatePassword").click(function () {
+        $('#ClientPassword').val(randomPassword(10)).trigger("change");
+    });
+
+    function randomPassword(length) {
+        var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
+        var specialChars = '@@!#$%^&*()-+<>';
+        var pass = "";
+        for (var x = 0; x < length; x++) {
+            if (x == 0) {
+                var charIndex = Math.floor(Math.random() * specialChars.length);
+                pass += specialChars.charAt(charIndex);
+            }
+            else {
+                var i = Math.floor(Math.random() * chars.length);
+                pass += chars.charAt(i);
+            }
+        }
+        return pass;
+    }
+
+
+    function getClientAvailableReceiptValueForBonus() {
+
+        $.ajax
+        ({
+            url: 'GetClientAvailableReceiptValueForBonus',
+            type: 'Get',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: {
+                clientID: $('#ID').val(), reciptDate: (new Date()).toISOString()
+            },
+            success: function (result) {
+                if (result.IsSuccess) {
+                    $('#AvailableReceiptForBonus_Client').val(kendo.toString(result.Result.AvailableReceiptValue, 'n2') + ' €');
+                    $('#MissingReceiptForBonus_Client').val(kendo.toString(result.Result.MissingReceiptValue, 'n2') + ' €');
+                }
+                else {
+                    alert(result.ErrorMessage);
+                }
+            },
+            error: function (e) {
+                alert(e);
+            },
+        });
+    }
+
+  
+</script>

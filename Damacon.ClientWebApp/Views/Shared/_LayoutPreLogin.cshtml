@@ -1,0 +1,153 @@
+﻿@using Damacon.DAL.i18n;
+
+<!doctype html>
+<html class="fixed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <title>@Html.Raw(Resources.FidelityCard)</title>
+
+    <meta name="keywords" content="Damacon StoreD" />
+    <meta name="description" content="">
+    <meta name="author" content="www.damacon.it/">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="@Html.Raw(Resources.FidelityCard)">
+    <link rel="apple-touch-icon" href="~/Assets/Images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72"
+          href="~/Assets/Images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+          href="~/Assets/Images/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+          href="~/Assets/Images/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+          href="~/Assets/Images/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="~/Assets/Images/apple-touch-icon-180x180.png">
+
+    <!-- Vendor CSS -->
+    @Styles.Render("~/assets/vendor/bootstrap/css/bootstrap.css")
+    @Styles.Render("~/assets/vendor/font-awesome/css/font-awesome.css")
+
+
+    @Styles.Render("~/Content/kendo/kendo.common-bootstrap.min.css?v=1.3")
+    @Styles.Render("~/Content/kendo/kendo.bootstrap.min.css?v=1.3")
+
+    <!-- Theme CSS -->
+    @Styles.Render("~/assets/css/theme.css?v=1.9")
+
+    <!-- Skin CSS -->
+    @Styles.Render("~/assets/css/skins/default.css")
+
+    <!-- Theme Custom CSS -->
+    @Styles.Render("~/assets/css/custom.css?v=1.4")
+
+    <!-- Head Libs -->
+    @Scripts.Render("~/assets/vendor/modernizr/modernizr.js")
+
+    <style type="text/css">
+        /* Customize the label (the container) */
+        .checkBoxContainer {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 0px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            .checkBoxContainer input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: white;
+            border-radius: 0.2rem;
+            border-width: 2px;
+            border-style: inset;
+            border-color: lightgray;
+            border-image: initial;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .checkBoxContainer:hover input ~ .checkmark {
+            background-color: white;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .checkBoxContainer input:checked ~ .checkmark {
+            background-color: white;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .checkBoxContainer input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .checkBoxContainer .checkmark:after {
+            left: 3px;
+            top: 0px;
+            width: 7px;
+            height: 13px;
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    </style>
+
+</head>
+<body>
+    <!-- start: page -->
+    @RenderBody()
+    <!-- end: page -->
+    <!-- end: page -->
+    <!-- Vendor -->
+    @Scripts.Render("~/assets/vendor/jquery/jquery.js")
+    @Scripts.Render("~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js")
+    @Scripts.Render("~/assets/vendor/popper/umd/popper.min.js")
+    @Scripts.Render("~/assets/vendor/bootstrap/js/bootstrap.js")
+    @Scripts.Render("~/assets/vendor/common/common.js")
+    @Scripts.Render("~/assets/vendor/nanoscroller/nanoscroller.js")
+    @Scripts.Render("~/assets/vendor/jquery-placeholder/jquery-placeholder.js")
+
+    <!-- Theme Base, Components and Settings -->
+    @Scripts.Render("~/assets/js/theme.js")
+
+    <!-- Theme Initialization Files -->
+    @Scripts.Render("~/assets/js/theme.init.js")
+
+    @Scripts.Render("~/Scripts/kendo/kendo.all.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.aspnetmvc.min.js")
+    @Scripts.Render("~/Scripts/kendo/kendo.culture.it-IT.min.js?v=1.2")
+
+    @RenderSection("additionaljs", required: false)
+</body>
+</html>

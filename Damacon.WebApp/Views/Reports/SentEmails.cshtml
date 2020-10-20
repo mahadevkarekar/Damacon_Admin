@@ -1,0 +1,118 @@
+﻿@using Damacon.WebApp.Models;
+@using Damacon.DAL.i18n;
+@model List<DocumentRegistrationModel>
+@{DateTime previousMonth = DateTime.Now.AddMonths(-1); }
+@{
+    ViewBag.Title = Resources.HM_SentEmails;
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/Common/_KendoStyles.cshtml")
+
+<div class="row form-group">
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.EmailType</label>
+            @Html.DropDownList("EmailConditionsFilter",
+                new SelectList((System.Collections.IEnumerable)ViewData["EmailConditions"], "Value", "Text"),
+                "",
+                new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "StoreID"})
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.StoreSender</label>
+            @Html.DropDownList("StoreFilter",
+                new SelectList((System.Collections.IEnumerable)ViewData["Stores"], "ID", "StoreName"),
+                "",
+                new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "SenderStoreID" })
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.StoreRecipient</label>
+            @Html.DropDownList("StoreFilter",
+                new SelectList((System.Collections.IEnumerable)ViewData["Stores"], "ID", "StoreName"),
+                "",
+                new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "RecipientStoreID"})
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.LastSentResult</label>
+            @Html.DropDownList("SentResultFilter",
+                new SelectList((System.Collections.IEnumerable)ViewData["EmailSendResultTypes"], "Value", "Text"),
+                "",
+                new { @class = "form-control form-control-sm mb-3 headerFilters", data_id = "SentResult" })
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.SentFrom</label>
+            @(Html.Kendo().DatePicker().
+                            Name("FromDate")
+                            .Value(previousMonth)
+                            .Format(UIExtensions.DateFormat)
+                            .HtmlAttributes(new { style = "width: 100%", title = "datepicker", @class = "dateFilters headerFilters", data_exportname = "FromDate" }))
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label class="col-form-label">@Resources.SentTo</label>
+            @(Html.Kendo().DatePicker().
+                            Name("ToDate")
+                            .Value(DateTime.Now)
+                            .Format(UIExtensions.DateFormat)
+                            .HtmlAttributes(new { style = "width: 100%", title = "datepicker", @class = "dateFilters headerFilters", data_exportname = "ToDate" }))
+        </div>
+    </div>
+</div>
+
+@(Html.Kendo().Grid<EmailTaskResultItemModel>
+        ()
+        .Name("sentEmailsGrid")
+        .Columns(columns =>
+        {
+            columns.ForeignKey(p => p.SendCondition, (System.Collections.IEnumerable)ViewData["EmailConditions"], "Value", "Text").Title(Resources.EmailType).Width(120);
+            columns.Bound(p => p.SentDateTime).Format(UIExtensions.DateTimeFormatKendo).Width(120);
+            columns.Bound(p => p.SentResult).Width(120);
+            columns.Bound(p => p.SenderEmail).Width(120);
+            columns.Bound(p => p.RecipientEmail).Width(120);
+            columns.Bound(p => p.StoreName).Width(120).Title(Resources.HM_Store);
+            columns.Bound(p => p.SenderStoreID).Hidden();
+            columns.Bound(p => p.RecipientStoreID).Hidden();
+            columns.Bound(p => p.StoreID).Hidden();
+        })
+        .Pageable()
+        .Sortable(sortable => sortable.AllowUnsort(false))
+        .Scrollable(s => s.Height("auto"))
+        .Events(e => { e.DataBound("dataBound"); })
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(s =>
+        {
+            s.Add("SentDateTime").Descending();
+        })
+        .PageSize(40)
+        .Batch(false)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.ID);
+            model.Field(p => p.ID).DefaultValue(0);
+        })
+        .Read(read => read.Action("ManageSentEmailsEditingPopup_Read", "Reports").Data("readAdditionalData"))
+        )
+)
+
+
+@Html.Partial("~/Views/Common/_KendoScripts.cshtml", new ViewDataDictionary { { "gridName", "#sentEmailsGrid" }, { "pageSize", "40" } })
+
+<script type="text/javascript">
+
+    function readAdditionalData() {
+        return { "fromDate": $('#FromDate').val(), "toDate": $('#ToDate').val() };
+    }
+</script>
